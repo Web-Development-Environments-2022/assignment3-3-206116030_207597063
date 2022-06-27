@@ -1,23 +1,12 @@
 <template>
   <div class="container">
     <h1 class="title">Main Page</h1>
-    <RecipePreviewList title="Randome Recipes" class="RandomRecipes center" />
+    <RecipePreviewList :key="key" title="Random Recipes" path="/recipes/random" class="RandomRecipes center" />
+    <button v-on:click="random">Random</button>
     <router-link v-if="!$root.store.username" to="/login" tag="button">You need to Login to vue this</router-link>
-    {{ !$root.store.username }}
-    <RecipePreviewList
-      title="Last Viewed Recipes"
-      :class="{
-        RandomRecipes: true,
-        blur: !$root.store.username,
-        center: true
-      }"
-      disabled
-    ></RecipePreviewList>
-    <!-- <div
-      style="position: absolute;top: 70%;left: 50%;transform: translate(-50%, -50%);"
-    >
-      Centeredasdasdad
-    </div>-->
+    <span v-if="$root.store.username">
+      <RecipePreviewList title="Last Viewed" path="/user/viewed3" class="RandomRecipes center"/>
+    </span>
   </div>
 </template>
 
@@ -26,7 +15,21 @@ import RecipePreviewList from "../components/RecipePreviewList";
 export default {
   components: {
     RecipePreviewList
+  },
+  data(){
+    return{
+      key: 0
+    };
+  },
+  methods:{
+    random: function() {
+    this.key +=1;
+
+
   }
+  },
+
+
 };
 </script>
 

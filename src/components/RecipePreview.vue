@@ -1,21 +1,34 @@
 <template>
-  <router-link
-    :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
-    class="recipe-preview"
-  >
+  <span class="recipe-preview">
+    <router-link :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
+    >
     <div class="recipe-body">
-      <img v-if="image_load" :src="recipe.image" class="recipe-image" />
+      <img v-b-tooltip.hover title="Click for full details" v-if="image_load" :src="recipe.image" class="recipe-image" />
     </div>
+    </router-link>
     <div class="recipe-footer">
-      <div :title="recipe.title" class="recipe-title">
-        {{ recipe.title }}
-      </div>
+      <span v-if="viewed">
+        <div :title="recipe.title" class="blue-recipe-title">
+          {{ recipe.title }}
+        </div>
+      </span>
+      <span v-else>  
+        <div :title="recipe.title" class="recipe-title">
+          {{ recipe.title }}
+          </div>
+      </span>
       <ul class="recipe-overview">
         <li>{{ recipe.readyInMinutes }} minutes</li>
-        <li>{{ recipe.aggregateLikes }} likes</li>
+        <li>{{ recipe.popularity }} likes</li>
       </ul>
+      <img v-if="recipe.vegan" v-bind:src="vegen" class="recipe-props" />
+      <img v-if="recipe.vegetarian" v-bind:src="vegetarian" class="recipe-props" />
+      <img v-if="recipe.glutenFree" v-bind:src="glutenFree" class="recipe-props" />
+      <img v-if="in_fav" v-bind:src="favy" class="recipe-props" />
+      <img v-if="!in_fav" v-bind:src="favn" class="recipe-props" />
+
     </div>
-  </router-link>
+  </span>
 </template>
 
 <script>
@@ -24,10 +37,38 @@ export default {
     this.axios.get(this.recipe.image).then((i) => {
       this.image_load = true;
     });
+    const response_fav = this.axios.get(
+          "http://localhost:3000/user/favorites"
+          //this.$root.store.server_domain + "/auth/Register",
+    );
+    response_fav.map((fav)=>{
+      if(fav.id == this.recipe.id){
+        this.in_fav = true;
+      }
+    });
+    const response_view = this.axios.get(
+          "http://localhost:3000/user/viewed"
+          //this.$root.store.server_domain + "/auth/Register",
+    );
+    response_view.map((view)=>{
+      if(view.id == this.recipe.id){
+        this.viewed = true;
+      }
+    });
+
+
+    
   },
   data() {
     return {
-      image_load: false
+      image_load: false,
+      in_fav: false,
+      viewed: false, 
+      vegen: require('../assets/vegan.png'),
+      vegetarian: require('../assets/vegetarian.png'),
+      glutenFree: require('../assets/gluten-free.png') ,
+      favy: require('../assets/yes-fav.png') ,
+      favn: require('../assets/no-fav.png')
     };
   },
   props: {
@@ -36,29 +77,6 @@ export default {
       required: true
     }
 
-    // id: {
-    //   type: Number,
-    //   required: true
-    // },
-    // title: {
-    //   type: String,
-    //   required: true
-    // },
-    // readyInMinutes: {
-    //   type: Number,
-    //   required: true
-    // },
-    // image: {
-    //   type: String,
-    //   required: true
-    // },
-    // aggregateLikes: {
-    //   type: Number,
-    //   required: false,
-    //   default() {
-    //     return undefined;
-    //   }
-    // }
   }
 };
 </script>
@@ -106,6 +124,17 @@ export default {
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
 }
+.blue-recipe-title{
+  padding: 10px 10px;
+  color: blue;
+  width: 100%;
+  font-size: 12pt;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
 
 .recipe-preview .recipe-footer ul.recipe-overview {
   padding: 5px 10px;
@@ -125,7 +154,13 @@ export default {
   table-layout: fixed;
   margin-bottom: 0px;
 }
-
+.recipe-props{
+  height: 35px;  
+  border-radius: 50%;
+  width: 35px;
+  text-align: center;
+  margin-left: 5px;
+}
 .recipe-preview .recipe-footer ul.recipe-overview li {
   -webkit-box-flex: 1;
   -moz-box-flex: 1;
