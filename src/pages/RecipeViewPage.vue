@@ -9,10 +9,18 @@
         <div class="wrapper">
           <div class="wrapped">
             <div class="mb-3">
+              <div><b>General Information:</b></div>
               <div>Ready in {{ recipe.readyInMinutes }} minutes</div>
               <div>Likes: {{ recipe.aggregateLikes }} likes</div>
+              <div>Vegetarian: {{ recipe.vegetarian }} </div>
+              <div>Vegan: {{ recipe.vegan }} </div>
+              <div>Gluten Free: {{ recipe.glutenFree }} </div>
+              <div>Price per serving: {{ recipe.pricePerServing }}$</div>
+              <div>Servings: {{ recipe.servings }} </div>
+              <div>Health score: {{ recipe.healthScore }}/100  </div>
+
             </div>
-            Ingredients:
+            <b>Ingredients:</b>
             <ul>
               <li
                 v-for="(r, index) in recipe.extendedIngredients"
@@ -23,7 +31,7 @@
             </ul>
           </div>
           <div class="wrapped">
-            Instructions:
+            <b>Instructions:</b>
             <ol>
               <li v-for="s in recipe._instructions" :key="s.number">
                 {{ s.step }}
@@ -32,11 +40,6 @@
           </div>
         </div>
       </div>
-      <!-- <pre>
-      {{ $route.params }}
-      {{ recipe }}
-    </pre
-      > -->
     </div>
   </div>
 </template>
@@ -71,7 +74,13 @@ export default {
         aggregateLikes,
         readyInMinutes,
         image,
-        title
+        title,
+        vegetarian,
+        vegan,
+        glutenFree,
+        pricePerServing,
+        serving,
+        healthScore
       } = response.data;
 
       let _instructions = analyzedInstructions
@@ -89,7 +98,13 @@ export default {
         aggregateLikes,
         readyInMinutes,
         image,
-        title
+        title,
+        vegetarian,
+        vegan,
+        glutenFree,
+        pricePerServing,
+        serving,
+        healthScore
       };
 
       this.recipe = _recipe;
@@ -116,4 +131,11 @@ export default {
 /* .recipe-header{
 
 } */
+h1{
+  text-align:center;
+  margin-bottom:20px;
+}
+img{
+  margin-bottom:20px;
+}
 </style>
