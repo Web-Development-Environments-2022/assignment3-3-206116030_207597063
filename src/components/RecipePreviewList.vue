@@ -5,9 +5,17 @@
       <slot></slot>
     </h3>
     <b-row>
-      <b-col v-for="r in recipes" :key="r.id">
-        <RecipePreview class="recipePreview" :recipe="r" />
-      </b-col>
+      <ul v-if="title=='Search result'">
+        <b-row v-for="r in recipes" :key="r.id">
+          <RecipePreview class="recipePreview" :recipe="r" />
+        </b-row>
+      </ul>
+      <ul v-else>
+        <b-col v-for="r in recipes" :key="r.id">
+          <RecipePreview class="recipePreview" :recipe="r" />
+        </b-col>
+      </ul>
+      
     </b-row>
   </b-container>
 </template>
@@ -40,6 +48,7 @@ export default {
   methods: {
     async updateRecipes() {
       try {
+        console.log(this.path);
         const response = await this.axios.get(
           "http://localhost:3000" + this.path,
         );
