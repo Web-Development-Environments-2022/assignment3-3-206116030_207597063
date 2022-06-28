@@ -159,7 +159,7 @@ export default {
   border-radius: 50%;
   width: 35px;
   text-align: center;
-  margin-left: 5px;
+  margin-left: 12px;
 }
 .recipe-preview .recipe-footer ul.recipe-overview li {
   -webkit-box-flex: 1;
