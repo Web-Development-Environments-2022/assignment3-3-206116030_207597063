@@ -155,9 +155,9 @@ export default {
         amount: null,
         sort: null,
         filter: false,
-        cuisine: null,
-        diet: null,
-        intolerance: null,
+        cuisine: '',
+        diet: '',
+        intolerance: '',
         submitError: undefined
       },
       sort_options: [
@@ -208,9 +208,9 @@ export default {
     },
     async search() {
       try {
-        this.form.cuisine = this.form.cuisine==null ? "None" : this.form.cuisine;
-        this.form.diet = this.form.diet==null ? "None" : this.form.diet;
-        this.form.intolerance = this.form.intolerance==null ? "None" : this.form.intolerance;
+        this.form.cuisine = this.form.cuisine=='' ? "None" : this.form.cuisine;
+        this.form.diet = this.form.diet=='' ? "None" : this.form.diet;
+        this.form.intolerance = this.form.intolerance=='' ? "None" : this.form.intolerance;
         this.form.filter = this.form.filter==false ? "0" : "1";
 
         this.param = "name="+ this.form.nameRecipe + "&amount=" + this.form.amount+"&filter=" + 
