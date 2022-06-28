@@ -132,7 +132,7 @@
       <pre class="m-0"><strong>form:</strong> {{ form }}</pre>
       <pre class="m-0"><strong>$v.form:</strong> {{ $v.form }}</pre>
     </b-card> -->
-    <RecipePreviewList v-if="hasSearch" title="Search result" v-bind:path="searchPath"></RecipePreviewList> 
+    <RecipePreviewList v-if="hasSearch" :key="key" title="Search result" v-bind:path="searchPath"></RecipePreviewList> 
   </div>
 </template>
 
@@ -178,6 +178,7 @@ export default {
       hasSearch: false,
       searchPath: "",
       param: "",
+      key: 0,
     };
   },
   validations: {
@@ -219,6 +220,8 @@ export default {
         this.searchPath = "/recipes/search?" + this.param;
         this.hasSearch = true;
         console.log(this.searchPath);
+        this.key +=1;
+
       } catch (err) {
         console.log(err.response);
         this.form.submitError = err.response.data.message;
