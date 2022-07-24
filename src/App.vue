@@ -8,12 +8,11 @@
       <b-nav-text v-if="!$root.store.username">Hello Guest: </b-nav-text>
       <b-nav-item v-if="!$root.store.username" :to="{ name: 'register' }">Register</b-nav-item>
       <b-nav-item v-if="!$root.store.username" :to="{ name: 'login' }">Login</b-nav-item>
-
       <!-- Navbar dropdowns -->
       <b-nav-item-dropdown text="My Kitchen" v-if="$root.store.username" right>
         <b-dropdown-item :to="{ name: 'search' }">Favorites</b-dropdown-item>
         <b-dropdown-item :to="{ name: 'search' }">My recipes</b-dropdown-item>
-        <b-dropdown-item :to="{ name: 'search' }">Add recipe</b-dropdown-item>
+        <b-dropdown-item :to="{ name: 'addRecipe' }">Add recipe</b-dropdown-item>
 
       </b-nav-item-dropdown>
     </b-navbar-nav>
