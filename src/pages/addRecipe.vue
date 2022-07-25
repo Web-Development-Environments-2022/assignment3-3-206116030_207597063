@@ -68,6 +68,18 @@
                 </b-form-invalid-feedback>
             </b-form-group>
             
+            <b-form-group id="input-group-ingredients" label-cols-sm="3" label="ingredients:" label-for="ingredients">
+              <br/>
+              <div class="form-group" v-for="(input,k) in form.ingredients" :key="k">
+                  <b-form-input placeholder="name's_ingredient" id="name's_ingredient" v-model="input.name" type="text" pattern="[a-zA-Z]+" required></b-form-input>
+                  <b-form-input placeholder="amount" id="amount" v-model="input.amount" type="number" required></b-form-input>
+                  <b-form-select id="unit" v-model="input.unit" :options="units" required></b-form-select>
+                  <span>
+                    <i class="fas fa-minus-circle" @click="remove(k)" v-show="k || ( !k && form.ingredients.length > 1)"> <img src="../assets/icons8-minus-48.png"/></i>
+                    <i class="fas fa-plus-circle" @click="add(k)" v-show="k == form.ingredients.length-1"><img src="../assets/icons8-plus-48.png"/></i>
+                  </span>       
+              </div>
+            </b-form-group>
             
             <b-button type="reset" variant="danger">Reset</b-button>
             <b-button type="submit" variant="primary" style="width:250px;" class="ml-5 w-75">Save recipe</b-button>
@@ -90,6 +102,7 @@ import {
   alpha,
   numeric
 } from "vuelidate/lib/validators";
+import units from "../assets/units";
 export default {
     data() {
         return {
@@ -102,9 +115,17 @@ export default {
                 glutenFree: "0",
                 servings: "",
                 analyzedInstructions: "",
-                submitError: undefined
+                submitError: undefined,
+                ingredients: [
+                  {
+                    name: '',
+                    amount: '',
+                    unit: 'unit'
+                  }
+                ]
             },
             errors: [],
+            units: [{ value: null, text: "", disabled: true }],
             validated: false
         };
     },
@@ -136,13 +157,25 @@ export default {
       },   
       analyzedInstructions:{
         required
-      },
+      }
     }
+  },
+  mounted() {
+        this.units.push(...units);
   },
   methods: {
     validateState(param) {
       const { $dirty, $error } = this.$v.form[param];
       return $dirty ? !$error : null;
+    },
+    add(index) {
+      this.form.ingredients.push({
+                    name: '',
+                    amount: '',
+                    unit: 'unit' });
+    },
+    remove(index) {
+      this.form.ingredients.splice(index, 1);
     },
     async Save() {
         try {
@@ -159,7 +192,7 @@ export default {
             glutenFree: this.form.glutenFree,
             servings: this.form.servings,
             analyzedInstructions: this.form.analyzedInstructions,
-            ingredients: ""
+            ingredients: this.form.ingredients
           }
         );
         this.$router.push("/search");
@@ -188,6 +221,13 @@ export default {
         glutenFree: "0",
         servings: "",
         analyzedInstructions: "",
+        ingredients: [
+                  {
+                    name: '',
+                    amount: '',
+                    unit:'unit'
+                  }
+                ],
       };
       this.$nextTick(() => {
         this.$v.$reset();
