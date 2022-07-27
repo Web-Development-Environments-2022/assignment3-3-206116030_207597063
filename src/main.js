@@ -6,6 +6,8 @@ import axios from "axios";
 import routes from "./routes";
 import VueRouter from "vue-router";
 Vue.use(VueRouter);
+import { ModalPlugin } from 'bootstrap-vue'
+Vue.use(ModalPlugin)
 const router = new VueRouter({
   routes,
 });

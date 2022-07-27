@@ -1,4 +1,5 @@
 <template>
+
   <div id="app">
     <b-navbar type="dark" variant="dark">
     <b-navbar-nav>
@@ -9,15 +10,25 @@
       <b-nav-text v-if="!$root.store.username">Hello Guest: </b-nav-text>
       <b-nav-item v-if="!$root.store.username" :to="{ name: 'register' }">Register</b-nav-item>
       <b-nav-item v-if="!$root.store.username" :to="{ name: 'login' }">Login</b-nav-item>
-
+      
       <!-- Navbar dropdowns -->
       <b-nav-item-dropdown text="My Kitchen" v-if="$root.store.username" right>
         <b-dropdown-item :to="{ name: 'search' }">Favorites</b-dropdown-item>
         <b-dropdown-item :to="{ name: 'search' }">My recipes</b-dropdown-item>
-        <b-dropdown-item :to="{ name: 'addRecipe' }">Add recipe</b-dropdown-item>
       </b-nav-item-dropdown>
-      <b-nav-item :to="{ name: 'addRecipe' }"> addRecipe </b-nav-item>
-      
+
+      <b-nav-item v-if="$root.store.username" id="show-btn" @click="$bvModal.show('bv-modal-example')"> addRecipe </b-nav-item>
+      <b-modal id="bv-modal-example" hide-footer>
+        <template #modal-title>
+          Add Recipe
+        </template>
+        <div class="d-block text-center">
+          <addRecipe></addRecipe>
+        </div>
+        <b-button class="mt-3" block @click="$bvModal.hide('bv-modal-example')">Close Me</b-button>
+      </b-modal>
+
+
       <b-nav-item-dropdown :text="username" v-if="$root.store.username" right>
         <b-dropdown-item v-on:click="Logout" :to="{ name: 'main' }">Sign Out</b-dropdown-item>
       </b-nav-item-dropdown>
@@ -26,9 +37,14 @@
     <router-view />
   </div>
 </template>
+
 <script>
+import addRecipe from "./components/AddRecipeCompo.vue";
 export default {
   name: "App",
+  components: {
+    addRecipe
+  },
   data() {
     return {
       username: this.$root.store.username,

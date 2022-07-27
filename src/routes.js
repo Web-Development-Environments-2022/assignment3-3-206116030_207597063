@@ -33,11 +33,6 @@ const routes = [
     component: () => import("./pages/RecipeViewPage"),
   },
   {
-    path: "/addRecipe",
-    name: "addRecipe",
-    component: () => import("./pages/addRecipe"),
-  },
-  {
     path: "/recipe/getfamilyRecipes",
     name: "OurFamilyRecipes",
     component: () => import("./pages/OurFamilyRecipes"),
