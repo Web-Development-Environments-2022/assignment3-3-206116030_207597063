@@ -15,8 +15,8 @@
           <RecipePreview class="recipePreview" :recipe="r" />
         </b-col>
       </ul>
-      
     </b-row>
+    <p v-if="error" >No results have been found!</p>
   </b-container>
 </template>
 
@@ -39,7 +39,8 @@ export default {
   },
   data() {
     return {
-      recipes: []
+      recipes: [],
+      error: false
     };
   },
   mounted() {
@@ -52,9 +53,13 @@ export default {
         const response = await this.axios.get(
           "http://localhost:3000" + this.path,
         );
+        this.error = false;
         const recipes = response.data;
         this.recipes = [];
         this.recipes.push(...recipes);
+        if(this.recipes.length == 0){
+          this.error = true;
+        }
       } catch (error) {
         console.log(error);
       }
