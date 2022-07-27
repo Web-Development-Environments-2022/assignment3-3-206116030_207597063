@@ -5,6 +5,7 @@
       <b-nav-item :to="{ name: 'main' }">Home</b-nav-item>
       <b-nav-item :to="{ name: 'search' }">Search</b-nav-item>
       <b-nav-item :to="{ name: 'about' }">About</b-nav-item>
+      <b-nav-item :to="{ name: 'OurFamilyRecipes' }">Family Recipes</b-nav-item>
       <b-nav-text v-if="!$root.store.username">Hello Guest: </b-nav-text>
       <b-nav-item v-if="!$root.store.username" :to="{ name: 'register' }">Register</b-nav-item>
       <b-nav-item v-if="!$root.store.username" :to="{ name: 'login' }">Login</b-nav-item>

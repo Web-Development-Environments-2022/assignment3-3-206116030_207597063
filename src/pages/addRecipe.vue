@@ -180,7 +180,7 @@ export default {
     async Save() {
         try {
         const response = await this.axios.post(
-          "http://localhost:3000/recipe/addRecipe",
+          "http://localhost:3000/recipes/addRecipe",
           //this.$root.store.server_domain + "/recipe/addRecipe",
 
           {
