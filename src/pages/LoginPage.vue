@@ -79,6 +79,8 @@ export default {
         console.log(this.$root.store.login);
         this.$root.store.login(this.form.username);
         this.$router.push("/");
+        localStorage.setItem("lastSearch", '');
+        // localStorage.lastSeaarch = '';
       } catch (err) {
         console.log(err.response);
         this.form.submitError = err.response.data.message;

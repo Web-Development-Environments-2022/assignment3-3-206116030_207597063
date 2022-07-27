@@ -44,13 +44,9 @@
         </b-form-select>
       </b-form-group>
 
-
-
-
-
-
       <b-button type="reset" variant="danger" v-if="!ShowingResults">Reset</b-button>
       <b-button type="submit" variant="primary" style="width:250px;" class="ml-5 w-75" v-if="!ShowingResults">Search</b-button>
+      <b-button type="button" variant="outline-primary" v-on:click="showLastSearch" v-if="($root.store.username) && (!lastSearch=='') && (!ShowingResults)">Last search</b-button>
     </b-form>
     <b-alert class="mt-2" v-if="form.submitError" variant="warning" dismissible show>
       Search failed: {{ form.submitError }}
@@ -98,9 +94,10 @@ export default {
         { value: '10', text: '10' },
         { value: '15', text: '15' },
       ],
+      lastSearch: localStorage.getItem("lastSearch"),
       ShowingResults: false,
       errors: [],
-      filter: "false",
+      //filter: false,
       validated: false,
       cuisines: [{ value: null, text: "", disabled: true }],
       diets: [{ value: null, text: "", disabled: true }],
@@ -151,6 +148,19 @@ export default {
         console.log(this.searchPath);
         this.key += 1;
 
+        const last = {
+          'nameRecipe': this.form.nameRecipe,
+          'amount': this.form.amount,
+          'sort': this.form.sort,
+          'filter': this.form.filter == 0 ? false: true ,
+          'cuisine': this.form.cuisine,
+          'diet': this.form.diet,
+          'intolerance': this.form.intolerance,
+          'submitError': this.form.submitError
+        };
+        localStorage.setItem("lastSearch", JSON.stringify(last));
+        this.lastSearch = JSON.parse(localStorage.getItem("lastSearch"))
+
       } catch (err) {
         console.log(err.response);
         this.form.submitError = err.response.data.message;
@@ -178,6 +188,18 @@ export default {
       this.$nextTick(() => {
         this.$v.$reset();
       });
+    },
+    showLastSearch(){
+      this.lastSearch = JSON.parse(localStorage.getItem("lastSearch"))
+      this.form = {
+        nameRecipe: this.lastSearch.nameRecipe,
+        amount: this.lastSearch.amount,
+        sort: this.lastSearch.sort,
+        filter: this.lastSearch.filter,
+        cuisine: this.lastSearch.cuisine,
+        diet: this.lastSearch.diet,
+        intolerance: this.lastSearch.intolerance,
+      };
     }
   }
 };
