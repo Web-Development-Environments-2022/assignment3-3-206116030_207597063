@@ -187,16 +187,15 @@ export default {
             title: this.form.name,
             recipeImage: this.form.image,
             readyInMinutes: this.form.readyInMinutes,
-            vegen: this.form.vegen,
+            vegan: this.form.vegan,
             vegeterian: this.form.vegeterian,
             glutenFree: this.form.glutenFree,
             servings: this.form.servings,
             analyzedInstructions: this.form.analyzedInstructions,
-            ingredients: this.form.ingredients
+            ingredients: this.form.ingredients,
           }
         );
-        this.$router.push("/search");
-        // console.log(response);
+        this.$router.push("/myRecipes");
       } catch (err) {
         console.log(err.response);
         this.form.submitError = err.response.data.message;

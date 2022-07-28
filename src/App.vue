@@ -6,6 +6,8 @@
       <b-nav-item :to="{ name: 'main' }">Home</b-nav-item>
       <b-nav-item :to="{ name: 'search' }">Search</b-nav-item>
       <b-nav-item :to="{ name: 'about' }">About</b-nav-item>
+      <b-nav-item :to="{ name: 'OurFamilyRecipes' }">Family Recipes</b-nav-item>
+
     </b-navbar-nav>
     <b-navbar-nav class="ml-auto">
   
@@ -15,23 +17,24 @@
       
       <!-- Navbar dropdowns -->
       <b-nav-item-dropdown text="My Kitchen" v-if="$root.store.username" right>
-        <b-dropdown-item :to="{ name: 'search' }">Favorites</b-dropdown-item>
-        <b-dropdown-item :to="{ name: 'search' }">My recipes</b-dropdown-item>
+        <b-dropdown-item :to="{ name: 'favorites' }">Favorites</b-dropdown-item>
+        <b-dropdown-item :to="{ name: 'myRecipes' }">My recipes</b-dropdown-item>
+        <b-dropdown-item v-if="$root.store.username" id="show-btn" @click="$bvModal.show('bv-modal-example')"> Add new recipe </b-dropdown-item>
+          <b-modal id="bv-modal-example" hide-footer>
+            <template #modal-title>
+              Add Recipe
+            </template>
+            <div class="d-block text-center">
+              <addRecipe></addRecipe>
+            </div>
+            <b-button class="mt-3" block @click="$bvModal.hide('bv-modal-example')">Cancel</b-button>
+          </b-modal>
       </b-nav-item-dropdown>
 
-      <b-nav-item v-if="$root.store.username" id="show-btn" @click="$bvModal.show('bv-modal-example')"> addRecipe </b-nav-item>
-      <b-modal id="bv-modal-example" hide-footer>
-        <template #modal-title>
-          Add Recipe
-        </template>
-        <div class="d-block text-center">
-          <addRecipe></addRecipe>
-        </div>
-        <b-button class="mt-3" block @click="$bvModal.hide('bv-modal-example')">Close Me</b-button>
-      </b-modal>
+      
 
 
-      <b-nav-item-dropdown :text="username" v-if="$root.store.username" right>
+      <b-nav-item-dropdown :text="$root.store.username" v-if="$root.store.username" right>
         <b-dropdown-item v-on:click="Logout" :to="{ name: 'main' }">Sign Out</b-dropdown-item>
       </b-nav-item-dropdown>
     </b-navbar-nav>

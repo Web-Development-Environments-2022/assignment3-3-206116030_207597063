@@ -63,10 +63,11 @@ export default{
     }
     .favorite__heart {
         display: inline-block;
-        padding: 3px;
         vertical-align: middle;
         line-height: 1;
-        font-size: 16px;
+        font-size: 40px;
+        margin-left: 12px;
+        margin-top: 6px;
         color: #ABABAB;
         cursor: pointer;
         -webkit-transition: color .2s ease-out;

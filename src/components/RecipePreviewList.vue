@@ -44,11 +44,11 @@ export default {
     };
   },
   mounted() {
-    if(this.title =="Watch it again"){
-      this.updateRecipes();
+    // if(this.title =="Watch it again" || this.title== "My recipes"){
+    //   this.updateRecipes();
 
-    }
-    //this.updateRecipes();
+    // }
+    this.updateRecipes();
   },
   methods: {
     async updateRecipes() {

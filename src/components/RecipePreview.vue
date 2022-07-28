@@ -40,6 +40,7 @@ export default {
     favorite
   },
   async mounted() {
+    console.log(this.recipe);
     this.axios.get(this.recipe.image).then((i) => {
       this.image_load = true;
     });
@@ -60,8 +61,9 @@ export default {
     );
     console.log(response_view);
     response_view.data.map((view)=>{
-      if(view.id == this.recipe.id){
+      if(view.RecipeID == this.recipe.id){
         this.viewed = true;
+        console.log("true");
       }
     });
     
@@ -165,7 +167,7 @@ export default {
 .recipe-props{
   height: 35px;  
   border-radius: 50%;
-  width: 35px;
+  width:35px;
   text-align: center;
   margin-left: 12px;
 }
