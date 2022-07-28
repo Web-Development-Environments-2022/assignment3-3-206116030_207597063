@@ -3,23 +3,24 @@
   <div id="app">
     <b-navbar type="dark" variant="dark">
     <b-navbar-nav>
-      <b-nav-item :to="{ name: 'main' }">Home</b-nav-item>
-      <b-nav-item :to="{ name: 'search' }">Search</b-nav-item>
-      <b-nav-item :to="{ name: 'about' }">About</b-nav-item>
-      <b-nav-item :to="{ name: 'OurFamilyRecipes' }">Family Recipes</b-nav-item>
+      <b-nav-item :to="{ name: 'main' }"><b-icon class="icons" icon="house-fill"></b-icon>Home</b-nav-item>
+      <b-nav-item :to="{ name: 'search' }"><b-icon class="icons" icon="search"></b-icon>Search</b-nav-item>
+      <b-nav-item :to="{ name: 'about' }"><b-icon class="icons" icon="info-circle-fill"></b-icon>About</b-nav-item>
+      <b-nav-item :to="{ name: 'OurFamilyRecipes' }"><b-icon class="icons" icon="newspaper"></b-icon>Family Recipes</b-nav-item>
 
     </b-navbar-nav>
     <b-navbar-nav class="ml-auto">
   
       <b-nav-text v-if="!$root.store.username">Hello Guest: </b-nav-text>
-      <b-nav-item v-if="!$root.store.username" :to="{ name: 'register' }">Register</b-nav-item>
-      <b-nav-item v-if="!$root.store.username" :to="{ name: 'login' }">Login</b-nav-item>
+      <b-nav-item v-if="!$root.store.username" :to="{ name: 'register' }"><b-icon class="icons" icon="person-plus-fill"></b-icon>Register</b-nav-item>
+      <b-nav-item v-if="!$root.store.username" :to="{ name: 'login' }"><b-icon class="icons" icon="person-circle"></b-icon>Login</b-nav-item>
       
       <!-- Navbar dropdowns -->
       <b-nav-item-dropdown text="My Kitchen" v-if="$root.store.username" right>
-        <b-dropdown-item :to="{ name: 'favorites' }">Favorites</b-dropdown-item>
-        <b-dropdown-item :to="{ name: 'myRecipes' }">My recipes</b-dropdown-item>
-        <b-dropdown-item v-if="$root.store.username" id="show-btn" @click="$bvModal.show('bv-modal-example')"> Add new recipe </b-dropdown-item>
+        <b-dropdown-item :to="{ name: 'favorites' }"><b-icon class="icons" icon="star-fill"></b-icon>Favorites</b-dropdown-item>
+        <b-dropdown-item :to="{ name: 'myRecipes' }"><b-icon class="icons" icon="list-check"></b-icon>My recipes</b-dropdown-item>
+        <b-dropdown-item v-if="$root.store.username" id="show-btn" @click="$bvModal.show('bv-modal-example')">
+          <b-icon class="icons" icon="pencil-square"></b-icon>Add new recipe </b-dropdown-item>
           <b-modal id="bv-modal-example" hide-footer>
             <template #modal-title>
               Add Recipe
@@ -30,12 +31,9 @@
             <b-button class="mt-3" block @click="$bvModal.hide('bv-modal-example')">Cancel</b-button>
           </b-modal>
       </b-nav-item-dropdown>
-
-      
-
-
       <b-nav-item-dropdown :text="$root.store.username" v-if="$root.store.username" right>
-        <b-dropdown-item v-on:click="Logout" :to="{ name: 'main' }">Sign Out</b-dropdown-item>
+        <b-dropdown-item v-on:click="Logout" :to="{ name: 'main' }"><b-icon icon="person-circle"></b-icon>
+        Sign Out</b-dropdown-item>
       </b-nav-item-dropdown>
     </b-navbar-nav>
   </b-navbar>
@@ -86,5 +84,8 @@ export default {
 }
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+.icons{
+  margin-right:7px;
 }
 </style>

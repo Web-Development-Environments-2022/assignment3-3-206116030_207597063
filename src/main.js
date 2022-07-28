@@ -11,6 +11,7 @@ Vue.use(ModalPlugin)
 const router = new VueRouter({
   routes,
 });
+import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 
 import Vuelidate from "vuelidate";
 import "bootstrap/dist/css/bootstrap.css";
@@ -68,6 +69,8 @@ Vue.use(VueAxios, axios);
 
 Vue.config.productionTip = false;
 
+Vue.use(BootstrapVue)
+Vue.use(BootstrapVueIcons)
 const shared_data = {
   username: localStorage.username,
   login(username) {
