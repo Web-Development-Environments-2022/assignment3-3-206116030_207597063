@@ -184,7 +184,7 @@ export default {
             title: this.form.name,
             recipeImage: this.form.image,
             readyInMinutes: this.form.readyInMinutes,
-            vegen: this.form.vegen,
+            vegan: this.form.vegan,
             vegeterian: this.form.vegeterian,
             glutenFree: this.form.glutenFree,
             servings: this.form.servings,
@@ -192,10 +192,11 @@ export default {
             ingredients: this.form.ingredients
           }
         );
-        this.$router.push("/search");
-        // console.log(response);
+        this.$root.toast("Great", "The recipe was added successfully", "success");
+        this.$router.push("/myRecipes");
       } catch (err) {
         console.log(err.response);
+        this.$root.toast("OOPS", "We were not able to upload the recipe, please try again", "danger");
         this.form.submitError = err.response.data.message;
       }
     },

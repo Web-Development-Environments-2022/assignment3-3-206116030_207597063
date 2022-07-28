@@ -18,7 +18,7 @@
         </b-form-invalid-feedback>
       </b-form-group>
 
-      <b-button type="submit" variant="primary" style="width:100px;display:block;" class="mx-auto w-100">Login
+      <b-button type="submit" variant="secondary" style="width:50%;display:block;" class="mx-auto w-100">Login
       </b-button>
       <div class="mt-2">
         Do not have an account yet?

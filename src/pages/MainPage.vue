@@ -1,12 +1,12 @@
 <template>
   <div class="container">
-    <div class=title>
+    <div class="title">
     <h1>COOK, EAT, SLEEP & REPEAT</h1>
     </div>
     <div class="middle">
     <div class="divon">
       <RecipePreviewList :key="key" title="Suprise Me" path="/recipes/random" class="RandomRecipes center" />
-      <button v-on:click="random">Show me more!</button>
+      <b-button squared variant="secondary" v-on:click="random">Show me more!</b-button>
     </div>  
 
     <div class="divon" v-if="$root.store.username">
@@ -47,18 +47,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.container{
+  text-align:center;
+}
 .title{
-  margin: auto;
+  margin-top:30px;  
+  text-align: center;
 }
 .middle {
     width:100%;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-gap: 10px;
+    grid-gap: 100px;
 }
 .divon{
-  width:70%;
+  width:100%;
 }
 
 
