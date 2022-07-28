@@ -74,14 +74,12 @@ export default {
             password: this.form.password
           }
         );
-        // console.log(response);
-        // this.$root.loggedIn = true;
-        console.log(this.$root.store.login);
         this.$root.store.login(this.form.username);
         this.$router.push("/");
         localStorage.setItem("lastSearch", '');
         // localStorage.lastSeaarch = '';
       } catch (err) {
+        this.$root.toast("Login failed", "Username or password is incorrect", "success");
         console.log(err.response);
         this.form.submitError = err.response.data.message;
       }
@@ -91,10 +89,9 @@ export default {
       this.form.submitError = undefined;
       this.$v.form.$touch();
       if (this.$v.form.$anyError) {
+        this.$root.toast("Login failed", "please make sure you fiiled all the fields correctly", "success");
         return;
       }
-      // console.log("login method go");
-
       this.Login();
     }
   }

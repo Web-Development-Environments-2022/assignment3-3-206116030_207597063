@@ -3,9 +3,10 @@
     <router-link :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
     >
     <div class="recipe-body">
-      <img v-b-tooltip.hover title="Click for full details" v-if="image_load" :src="recipe.image" class="recipe-image" />
+      <img  title="Click for full details" v-if="image_load" :src="recipe.image" class="recipe-image" />
     </div>
     </router-link>
+
     <div class="recipe-footer">
       <span v-if="viewed">
         <div :title="recipe.title" class="blue-recipe-title">
@@ -15,8 +16,10 @@
       <span v-else>  
         <div :title="recipe.title" class="recipe-title">
           {{ recipe.title }}
-          </div>
+        </div>
       </span>
+
+
       <ul class="recipe-overview">
         <li>{{ recipe.readyInMinutes }} minutes</li>
         <li>{{ recipe.popularity }} likes</li>
@@ -24,37 +27,44 @@
       <img v-if="recipe.vegan" v-bind:src="vegen" class="recipe-props" />
       <img v-if="recipe.vegetarian" v-bind:src="vegetarian" class="recipe-props" />
       <img v-if="recipe.glutenFree" v-bind:src="glutenFree" class="recipe-props" />
-      <img v-if="in_fav" v-bind:src="favy" class="recipe-props" />
-      <img v-if="!in_fav" v-bind:src="favn" class="recipe-props" />
+      <favorite :value="fav" :id="recipe.id"></favorite>
 
     </div>
   </span>
 </template>
 
 <script>
+import favorite from "./Favorite.vue";
 export default {
-  mounted() {
+  components:{
+    favorite
+  },
+  async mounted() {
     this.axios.get(this.recipe.image).then((i) => {
       this.image_load = true;
     });
-    const response_fav = this.axios.get(
+    const response_fav = await this.axios.get(
           "http://localhost:3000/user/favorites"
           //this.$root.store.server_domain + "/auth/Register",
     );
-    response_fav.map((fav)=>{
+    
+    console.log(response_fav);
+    response_fav.data.map((fav)=>{
       if(fav.id == this.recipe.id){
-        this.in_fav = true;
+        this.fav = true;
       }
     });
-    const response_view = this.axios.get(
+    const response_view = await this.axios.get(
           "http://localhost:3000/user/viewed"
           //this.$root.store.server_domain + "/auth/Register",
     );
-    response_view.map((view)=>{
+    console.log(response_view);
+    response_view.data.map((view)=>{
       if(view.id == this.recipe.id){
         this.viewed = true;
       }
     });
+    
 
 
     
@@ -62,13 +72,11 @@ export default {
   data() {
     return {
       image_load: false,
-      in_fav: false,
+      fav: false,
       viewed: false, 
       vegen: require('../assets/vegan.png'),
       vegetarian: require('../assets/vegetarian.png'),
       glutenFree: require('../assets/gluten-free.png') ,
-      favy: require('../assets/yes-fav.png') ,
-      favn: require('../assets/no-fav.png')
     };
   },
   props: {
@@ -126,7 +134,7 @@ export default {
 }
 .blue-recipe-title{
   padding: 10px 10px;
-  color: blue;
+  color: #0000FF;
   width: 100%;
   font-size: 12pt;
   text-align: left;

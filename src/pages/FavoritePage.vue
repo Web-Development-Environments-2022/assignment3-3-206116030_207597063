@@ -1,33 +1,17 @@
 <template>
   <div class="container">
-    <div class=title>
-    <h1>COOK, EAT, SLEEP & REPEAT</h1>
-    </div>
-    <div class="middle">
     <div class="divon">
-      <RecipePreviewList :key="key" title="Suprise Me" path="/recipes/random" class="RandomRecipes center" />
-      <button v-on:click="random">Show me more!</button>
+      <RecipePreviewList :key="key" title="My favorite recipes" path="/user/favorites" class="RandomRecipes center" />
     </div>  
-
-    <div class="divon" v-if="$root.store.username">
-        <RecipePreviewList title="Watch it again" path="/user/viewed3" class="RandomRecipes center"/>
-    </div>
-
-    <div class="divon" v-if="!$root.store.username">
-      <LoginPage></LoginPage>
-    </div>
-  </div>
   </div>
 </template>
 
 <script>
 import RecipePreviewList from "../components/RecipePreviewList";
-import LoginPage from "../pages/LoginPage";
 
 export default {
   components: {
     RecipePreviewList,
-    LoginPage
   },
   data(){
     return{

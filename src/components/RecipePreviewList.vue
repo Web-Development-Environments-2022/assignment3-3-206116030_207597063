@@ -44,7 +44,11 @@ export default {
     };
   },
   mounted() {
-    this.updateRecipes();
+    if(this.title =="Watch it again"){
+      this.updateRecipes();
+
+    }
+    //this.updateRecipes();
   },
   methods: {
     async updateRecipes() {
