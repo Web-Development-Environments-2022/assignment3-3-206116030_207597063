@@ -17,9 +17,9 @@
           Password is required
         </b-form-invalid-feedback>
       </b-form-group>
+      <b-button type="submit" variant="secondary"  class="button">Login
+      </b-button> 
 
-      <b-button type="submit" variant="secondary" style="width:50%;display:block;" class="mx-auto w-100">Login
-      </b-button>
       <div class="mt-2">
         Do not have an account yet?
         <router-link to="register"> Register in here</router-link>
@@ -100,5 +100,29 @@ export default {
 <style lang="scss" scoped>
 .container {
   max-width: 400px;
+}
+.button {
+  display: inline-block;
+  padding: 10px 50px;
+  font-size: 15px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #92817a;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 5px #999;
+}
+
+.button:hover {
+  background-color: #854d27
+  }
+
+.button:active {
+  background-color: #854d27;
+  box-shadow: 0 3px #666;
+  transform: translateY(4px);
 }
 </style>

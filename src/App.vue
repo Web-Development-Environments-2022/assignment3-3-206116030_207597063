@@ -1,7 +1,10 @@
 <template>
 
   <div id="app">
-    <b-navbar type="dark" variant="dark">
+    <div id="header">
+    <img class="logo" src="./assets/rplogo2.png" alt="logo">
+    </div>
+    <b-navbar class="navi" type="dark">
     <b-navbar-nav>
       <b-nav-item :to="{ name: 'main' }"><b-icon class="icons" icon="house-fill"></b-icon>Home</b-nav-item>
       <b-nav-item :to="{ name: 'search' }"><b-icon class="icons" icon="search"></b-icon>Search</b-nav-item>
@@ -39,6 +42,7 @@
   </b-navbar>
     <router-view />
   <div class="footer">
+  <p>&copy; Amit & Yuval. Inforamtion and software engeineering - web development 2022 -  Assigment. 3 All Rights Reserved</p>
   </div>  
   </div>
 </template>
@@ -74,8 +78,8 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #362417;
-  background-color: #f1dabf;
+  color: #92817a;
+  background-color: #fffbff;
   min-height: 100vh;
 }
 #nav {
@@ -83,12 +87,36 @@ export default {
 }
 #nav a {
   font-weight: bold;
-  color: #2c3e50;
+
 }
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
+
 .icons{
   margin-right:7px;
+}
+.navi{
+  background-color: #362417;
+  color: #fffbff;
+  font-weight: bold;
+}
+.footer{
+  position: relative;
+  bottom: 10px;
+  background-color: #362417;
+  color: #fffbff; 
+  margin-top:30px;
+  border: 1px solid #ab47bc;
+  height: 80px; 
+  padding: 8px;
+  width:100%;
+  text-align:center;
+}
+.logo{
+  display: block;
+  margin: auto;
+  height:250px;
+  width:250px;
+}
+#header{
+  background-image: url("./assets/back.png");
 }
 </style>

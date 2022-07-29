@@ -8,9 +8,10 @@
       <div class="recipe-body">
         <div class="wrapper">
           <div class="wrapped">
-            <div class="mb-3">
-              <div><b>General Information:</b></div>
-              <div>Ready in {{ recipe.readyInMinutes }} minutes</div>
+          <b-tabs pills card>
+
+            <b-tab title="General Information" active><b-card-text>
+            <div>Ready in {{ recipe.readyInMinutes }} minutes</div>
               <div>Likes: {{ recipe.aggregateLikes }} likes</div>
               <div>Vegetarian: {{ recipe.vegetarian }} </div>
               <div>Vegan: {{ recipe.vegan }} </div>
@@ -18,30 +19,35 @@
               <div>Price per serving: {{ recipe.pricePerServing }}$</div>
               <div>Servings: {{ recipe.servings }} </div>
               <div>Health score: {{ recipe.healthScore }}/100  </div>
+            </b-card-text></b-tab>
 
-            </div>
-            <b>Ingredients:</b>
-            <ul>
-              <li
-                v-for="(r, index) in recipe.extendedIngredients"
-                :key="index + '_' + r.id"
-              >
-                {{ r.original }}
-              </li>
-            </ul>
-          </div>
-          <div class="wrapped">
-            <b>Instructions:</b>
-            <ol>
-              <li v-for="s in recipe._instructions" :key="s.number">
-                {{ s.step }}
-              </li>
-            </ol>
-          </div>
-        </div>
+
+            <b-tab title="Ingredients"><b-card-text>
+              <ul>
+                <li
+                  v-for="(r, index) in recipe.extendedIngredients"
+                  :key="index + '_' + r.id"
+                >
+                  {{ r.original }}
+                </li>
+              </ul>
+            </b-card-text></b-tab>
+            <b-tab title="Instructions"><b-card-text>
+              <ol>
+                <li v-for="s in recipe._instructions" :key="s.number">
+                  <b-form-checkbox>
+                  {{ s.step }}
+                </b-form-checkbox>
+                </li>
+              </ol>
+            </b-card-text></b-tab>
+    </b-tabs>
       </div>
     </div>
   </div>
+    </div>
+        </div>
+
 </template>
 
 <script>
@@ -116,11 +122,9 @@ export default {
 </script>
 
 <style scoped>
-.wrapper {
-  display: flex;
-}
+
 .wrapped {
-  width: 50%;
+  width: 60%;
 }
 .center {
   display: block;
@@ -137,5 +141,11 @@ h1{
 }
 img{
   margin-bottom:20px;
+}
+.recipe-body{
+  margin:auto;
+}
+.container{
+  align:center;
 }
 </style>

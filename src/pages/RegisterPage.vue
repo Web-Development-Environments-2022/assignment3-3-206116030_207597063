@@ -88,10 +88,6 @@
     <b-alert class="mt-2" v-if="form.submitError" variant="warning" dismissible show>
       Register failed: {{ form.submitError }}
     </b-alert>
-    <b-card class="mt-3 md-3" header="Form Data Result">
-      <pre class="m-0"><strong>form:</strong> {{ form }}</pre>
-      <pre class="m-0"><strong>$v.form:</strong> {{ $v.form }}</pre>
-    </b-card>
   </div>
 </template>
 
