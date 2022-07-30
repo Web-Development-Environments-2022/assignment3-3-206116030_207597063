@@ -79,7 +79,7 @@ export default {
         localStorage.setItem("lastSearch", '');
         // localStorage.lastSeaarch = '';
       } catch (err) {
-        this.$root.toast("Login failed", "Username or password is incorrect", "success");
+        this.$root.toast("Login failed", "Username or password is incorrect", "danger");
         console.log(err.response);
         this.form.submitError = err.response.data.message;
       }
@@ -89,7 +89,7 @@ export default {
       this.form.submitError = undefined;
       this.$v.form.$touch();
       if (this.$v.form.$anyError) {
-        this.$root.toast("Login failed", "please make sure you fiiled all the fields correctly", "success");
+        this.$root.toast("Login failed", "please make sure you fiiled all the fields correctly", "danger");
         return;
       }
       this.Login();

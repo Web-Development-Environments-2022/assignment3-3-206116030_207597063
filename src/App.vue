@@ -42,7 +42,56 @@
   </b-navbar>
     <router-view />
   <div class="footer">
-  <p>&copy; Amit & Yuval. Inforamtion and software engeineering - web development 2022 -  Assigment. 3 All Rights Reserved</p>
+  <b-row class="rows">
+  <b-col>
+    <div class="footer-map">
+      <h4 class="map-head">Site Map</h4>
+      <ul class="map-ul">
+        <li>
+          <b-link :to="{ name: 'main'}">Home</b-link>
+        </li>
+        <li>
+          <b-link :to="{ name: 'search'}">Search</b-link>
+        </li>
+        <li>
+          <b-link :to="{ name: 'about'}">About</b-link>
+        </li>
+        <li>
+          <b-link :to="{ name: 'OurFamilyRecipes'}">Family recipes</b-link>
+        </li>
+      </ul>
+    </div>
+    </b-col>
+    <b-col>
+    <div class="bottom-container">
+      <a href="https://www.linkedin.com/in/yuval-felendler">
+        <img class="social-media" src="./assets/linkedin.png" alt="LinkedIn">
+      </a>
+
+      <a href="https://www.instagram.com/yuvalfelendler/">
+      <img class="social-media" src="./assets/instagram.png" alt="Instagram">
+      </a>
+
+      <a href="https://www.facebook.com/yuval.felendler">
+      <img class="social-media" src="./assets/facebook.png" alt="Facebook">
+      </a>
+    </div>
+    </b-col>
+    <b-col>
+    <div class="mail-us">
+    <div>
+      <h6>Want to get updated on some new awesome recipes?</h6>
+    </div>
+    <div class="input-f">
+        <b-form-input class="mail-input" placeholder="Enter mail here"></b-form-input>
+    </div>
+    <div class="input-b">
+        <b-button variant="warning">Send</b-button>
+    </div>
+    </div>
+    </b-col>
+    </b-row>
+    <p>&copy; Amit & Yuval<br> Inforamtion and software engeineering <br> web development 2022 -  Assigment 3<br> All Rights Reserved</p>
   </div>  
   </div>
 </template>
@@ -85,11 +134,25 @@ export default {
 #nav {
   padding: 30px;
 }
+.map-ul{
+  list-style-type: none;
+}
+.input-b{
+  float:left;
+  margin-top:6px;
+  margin-left:5px;
+}
+.input-f{
+  float:left;
+  margin-left:50px;
+}
 #nav a {
   font-weight: bold;
 
 }
-
+.bottom-container{
+  margin-bottom:15px;
+}
 .icons{
   margin-right:7px;
 }
@@ -105,10 +168,13 @@ export default {
   color: #fffbff; 
   margin-top:30px;
   border: 1px solid #ab47bc;
-  height: 80px; 
   padding: 8px;
   width:100%;
   text-align:center;
+}
+.mail-input{
+  width:20px;
+  margin-top:7px;
 }
 .logo{
   display: block;
@@ -116,7 +182,19 @@ export default {
   height:250px;
   width:250px;
 }
+.rows{
+  margin-top:15px;
+}
+.social-media{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-left: 20px;
+}
 #header{
   background-image: url("./assets/back.png");
+}
+.map-head{
+  margin-left:40px;
 }
 </style>

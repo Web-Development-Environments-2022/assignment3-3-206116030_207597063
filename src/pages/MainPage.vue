@@ -6,7 +6,7 @@
     <div class="middle">
     <div class="divon">
       <RecipePreviewList :key="key" title="Suprise Me" path="/recipes/random" class="RandomRecipes center" />
-      <OurButton v-on:click="random" text="Show me more!"></OurButton>
+      <OurButton :onClick="random" text="Show me more!"></OurButton>
     </div>  
 
     <div class="divon" v-if="$root.store.username">
@@ -82,6 +82,7 @@ export default {
   methods:{
     random: function() {
     this.key +=1;
+    console.log(this.key);
 
 
   }
@@ -131,5 +132,8 @@ export default {
 .pic{
   height:270px;
   width:500px;
+}
+ul{
+  list-style-type: none;
 }
 </style>
