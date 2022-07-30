@@ -60,14 +60,30 @@
                 Servings must be a numeric
                 </b-form-invalid-feedback>
             </b-form-group>  
-            <b-form-group id="input-group-analyzedInstructions" label-cols-sm="3" label="analyzed instructions:" label-for="analyzedInstructions">
+            <!-- <b-form-group id="input-group-analyzedInstructions" label-cols-sm="3" label="analyzed instructions:" label-for="analyzedInstructions">
                 <b-form-input id="analyzedInstructions" v-model="$v.form.analyzedInstructions.$model" type="text" :state="validateState('analyzedInstructions')">
                 </b-form-input>
                 <b-form-invalid-feedback v-if="!$v.form.analyzedInstructions.required">
                 analyzedInstructions is required
                 </b-form-invalid-feedback>
-            </b-form-group>
+            </b-form-group> -->
             
+
+            <b-form-group id="input-group-analyzedInstructions" label-cols-sm="3" label="analyzed instructions:" label-for="analyzedInstructions">
+              <br/>
+              <div class="form-group" v-for="(input,k) in form.analyzedInstructions" :key="k">
+                  {{"step "+ k}}       
+                  <b-form-input placeholder="instruction" id="instruction" v-model="input.instruction" required></b-form-input>
+                  <span>
+                    <i class="fas fa-minus-circle" @click="remove(k.toExponential,'instructions')" v-show="k || ( !k && form.analyzedInstructions.length > 1)"> <img src="../assets/icons8-minus-48.png"/></i>
+                    <i class="fas fa-plus-circle" @click="add(k,'instructions')" v-show="k == form.analyzedInstructions.length-1"><img src="../assets/icons8-plus-48.png"/></i>
+                  </span>       
+              </div>
+            </b-form-group>
+
+
+
+
             <b-form-group id="input-group-ingredients" label-cols-sm="3" label="ingredients:" label-for="ingredients">
               <br/>
               <div class="form-group" v-for="(input,k) in form.ingredients" :key="k">
@@ -89,11 +105,13 @@
             Add recipe failed: {{ form.submitError }}
         </b-alert>
 
-        
+      {{form}}
+
     </div>
 </template>
 
 <script>
+import { BIconEmojiSmileUpsideDown } from "bootstrap-vue";
 import {
   required,
   alpha,
@@ -111,8 +129,14 @@ export default {
                 vegeterian: "0",
                 glutenFree: "0",
                 servings: "",
-                analyzedInstructions: "",
+                //analyzedInstructions: "",
                 submitError: undefined,
+                analyzedInstructions: [
+                  {
+                    number: 0,
+                    instruction: ''
+                  }
+                ],
                 ingredients: [
                   {
                     name: '',
@@ -165,17 +189,36 @@ export default {
       const { $dirty, $error } = this.$v.form[param];
       return $dirty ? !$error : null;
     },
-    add(index) {
-      this.form.ingredients.push({
+    add(index,type) {
+      if(type === 'instructions'){
+        this.form.analyzedInstructions.push({
+          number: 0,
+          instruction: ''
+        })
+      }
+      else{
+        this.form.ingredients.push({
                     name: '',
                     amount: '',
                     unit: 'unit' });
+      }
     },
-    remove(index) {
+    remove(index,type) {
+      if(type === 'instructions'){
+      this.form.analyzedInstructions.splice(index, 1);
+      }
+      else{
       this.form.ingredients.splice(index, 1);
+      }
     },
     async Save() {
-        try {
+      var i = 0;
+      for (let x of this.form.analyzedInstructions) {
+        x.number = i;
+        i++; 
+      }
+      console.log(this.form.analyzedInstructions); 
+        try {  
         const response = await this.axios.post(
           "http://localhost:3000/recipes/addRecipe",
           //this.$root.store.server_domain + "/recipe/addRecipe",
@@ -193,6 +236,9 @@ export default {
           }
         );
         this.$root.toast("Great", "The recipe was added successfully", "success");
+        this.$nextTick(() => {
+          this.$bvModal.hide('bv-modal-example')
+        })
         this.$router.push("/myRecipes");
       } catch (err) {
         console.log(err.response);
@@ -218,7 +264,12 @@ export default {
         vegeterian: "0",
         glutenFree: "0",
         servings: "",
-        analyzedInstructions: "",
+        analyzedInstructions: [
+                  {
+                    number: 0,
+                    instruction: ''
+                  }
+                ],
         ingredients: [
                   {
                     name: '',

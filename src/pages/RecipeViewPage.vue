@@ -85,16 +85,23 @@ export default {
         vegan,
         glutenFree,
         pricePerServing,
-        serving,
+        servings,
         healthScore
       } = response.data;
 
-      let _instructions = analyzedInstructions
+      var _instructions="";
+
+      if(this.$route.params.recipeId.startsWith('d')){
+        _instructions = analyzedInstructions;
+      }
+      else{
+        _instructions = analyzedInstructions
         .map((fstep) => {
           fstep.steps[0].step = fstep.name + fstep.steps[0].step;
           return fstep.steps;
         })
         .reduce((a, b) => [...a, ...b], []);
+      }
 
       let _recipe = {
         instructions,
@@ -109,11 +116,16 @@ export default {
         vegan,
         glutenFree,
         pricePerServing,
-        serving,
+        servings,
         healthScore
       };
 
       this.recipe = _recipe;
+      if(this.$route.params.recipeId){
+        this.recipe.vegan = this.recipe.vegan == '0' ? "false" : "true";
+        this.recipe.vegetarian = this.recipe.vegetarian == '0' ? "false" : "true";
+        this.recipe.glutenFree = this.recipe.glutenFree == '0' ? "false" : "true";
+      }
     } catch (error) {
       console.log(error);
     }
