@@ -30,24 +30,24 @@
                 </b-form-invalid-feedback>
             </b-form-group>  
             <b-form-group id="input-group-vegan" label-cols-sm="3" label="vegan:" label-for="vegan">
-                <input type="radio" id="vegan-true" value="1" v-model="$v.form.vegan.$model" />
+                <input type="radio" id="vegan-true" value=1 v-model="$v.form.vegan.$model" />
                 <label for="one">True</label>
 
-                <input type="radio" id="vegan-false" value="0" v-model="$v.form.vegan.$model"/>
+                <input type="radio" id="vegan-false" value=0 v-model="$v.form.vegan.$model"/>
                 <label for="two">False</label>
             </b-form-group>
             <b-form-group id="input-group-vegeterian" label-cols-sm="3" label="vegeterian:" label-for="vegeterian">
-                <input type="radio" id="vegeterian-true" value="1" v-model="$v.form.vegeterian.$model" />
+                <input type="radio" id="vegeterian-true" value=1 v-model="$v.form.vegeterian.$model" />
                 <label for="one">True</label>
 
-                <input type="radio" id="vegeterian-false" value="0" v-model="$v.form.vegeterian.$model"/>
+                <input type="radio" id="vegeterian-false" value=0 v-model="$v.form.vegeterian.$model"/>
                 <label for="two">False</label>
             </b-form-group>
             <b-form-group id="input-group-glutenFree" label-cols-sm="3" label="glutenFree:" label-for="glutenFree">
-                <input type="radio" id="glutenFree-true" value="1" v-model="$v.form.glutenFree.$model" />
+                <input type="radio" id="glutenFree-true" value=1 v-model="$v.form.glutenFree.$model" />
                 <label for="one">True</label>
 
-                <input type="radio" id="glutenFree-false" value="0" v-model="$v.form.glutenFree.$model"/>
+                <input type="radio" id="glutenFree-false" value=0 v-model="$v.form.glutenFree.$model"/>
                 <label for="two">False</label>
             </b-form-group>
             <b-form-group id="input-group-servings" label-cols-sm="3" label="How many servings?" label-for="servings">
@@ -125,9 +125,9 @@ export default {
                 name: "",
                 image: "",
                 readyInMinutes: "",
-                vegan: "0",
-                vegeterian: "0",
-                glutenFree: "0",
+                vegan: 0,
+                vegeterian: 0,
+                glutenFree: 0,
                 servings: "",
                 //analyzedInstructions: "",
                 submitError: undefined,
@@ -260,9 +260,9 @@ export default {
         name: "",
         image: "",
         readyInMinutes: "",
-        vegan: "0",
-        vegeterian: "0",
-        glutenFree: "0",
+        vegan: 0,
+        vegeterian: 0,
+        glutenFree: 0,
         servings: "",
         analyzedInstructions: [
                   {
