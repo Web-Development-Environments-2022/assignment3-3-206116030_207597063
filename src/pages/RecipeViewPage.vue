@@ -3,6 +3,7 @@
     <div v-if="recipe">
       <div class="recipe-header mt-3 mb-4">
         <h1>{{ recipe.title }}</h1>
+        <h4>Owner Recipe: {{recipe.ownerRecipe}}</h4>
         <img :src="recipe.image" class="center" />
       </div>
       <div class="recipe-body">
@@ -12,13 +13,11 @@
 
             <b-tab title="General Information" active><b-card-text>
             <div>Ready in {{ recipe.readyInMinutes }} minutes</div>
-              <div>Likes: {{ recipe.aggregateLikes }} likes</div>
               <div>Vegetarian: {{ recipe.vegetarian }} </div>
               <div>Vegan: {{ recipe.vegan }} </div>
               <div>Gluten Free: {{ recipe.glutenFree }} </div>
-              <div>Price per serving: {{ recipe.pricePerServing }}$</div>
-              <div>Servings: {{ recipe.servings }} </div>
-              <div>Health score: {{ recipe.healthScore }}/100  </div>
+              <div>{{recipe.WhenDoWeEat}}</div>
+              <div v-if="!recipe.id.startsWith('d')">Health score: {{ recipe.healthScore }}/100  </div>
             </b-card-text></b-tab>
 
 
@@ -35,26 +34,40 @@
             <b-tab title="Instructions"><b-card-text>
               <ol>
                 <li v-for="s in recipe._instructions" :key="s.number">
-                  <b-form-checkbox>
+                  <b-form-checkbox v-on:change="increment($event)">
                   {{ s.step }}
                 </b-form-checkbox>
                 </li>
               </ol>
-            </b-card-text></b-tab>
-    </b-tabs>
+              <round-slider
+                v-model= value
+                start-angle="315"
+                end-angle="+270"
+                line-cap="round"
+                radius="120"
+                readOnly="true"
+                />
+              </b-card-text></b-tab>
+      </b-tabs>
+        </div>
       </div>
     </div>
-  </div>
-    </div>
-        </div>
+      </div>
+          </div>
 
-</template>
+  </template>
 
-<script>
+  <script>
+import RoundSlider from 'vue-round-slider'
 export default {
+  components: {
+    RoundSlider,
+  },
   data() {
     return {
-      recipe: null
+      recipe: null,
+      count: 0,
+      value:0
     };
   },
   async created() {
@@ -128,6 +141,18 @@ export default {
       }
     } catch (error) {
       console.log(error);
+    }
+  },
+  methods:{
+    increment(event){
+        const isChecked = event;
+        if(isChecked){
+            this.count++;
+        }else{
+            this.count--;
+        } 
+        this.value = (this.count/this.recipe._instructions.length)*100
+
     }
   }
 };

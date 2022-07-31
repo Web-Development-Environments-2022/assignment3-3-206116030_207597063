@@ -1,7 +1,6 @@
 <template>
   <span class="recipe-preview">
-    <router-link :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
-    >
+    <router-link :to="{ name: 'recipe', params: { recipeId: recipe.id } }">
     <div class="recipe-body">
       <img  title="Click for full details" v-if="image_load" :src="recipe.image" class="recipe-image" />
     </div>
@@ -67,9 +66,6 @@ export default {
       }
     });
     
-
-
-    
   },
   data() {
     return {
@@ -86,8 +82,7 @@ export default {
       type: Object,
       required: true
     }
-
-  }
+  },
 };
 </script>
 
