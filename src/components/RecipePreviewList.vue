@@ -11,6 +11,7 @@
         </b-row>
       </ul>
       <ul v-else-if="title=='Family recipes'">
+        {{recipes}}
         <b-row v-for="r in recipes" :key="r.id">
           <FamilyRecipe class="FamilyRecipe" :recipe="r"/>
         </b-row>

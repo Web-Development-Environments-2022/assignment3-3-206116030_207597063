@@ -3,6 +3,7 @@
     <div v-if="recipe">
       <div class="recipe-header mt-3 mb-4">
         <h1>{{ recipe.title }}</h1>
+        <h4>Owner Recipe: {{recipe.ownerRecipe}}</h4>
         <img :src="recipe.image" class="center" />
       </div>
       <div class="recipe-body">
@@ -11,13 +12,13 @@
           <b-tabs pills card>
 
             <b-tab title="General Information" active><b-card-text>
+            <div>{{recipe.WhenDoWeEat}}</div>
             <div>Ready in {{ recipe.readyInMinutes }} minutes</div>
               <div>Likes: {{ recipe.aggregateLikes }} likes</div>
               <div>Vegetarian: {{ recipe.vegetarian }} </div>
               <div>Vegan: {{ recipe.vegan }} </div>
               <div>Gluten Free: {{ recipe.glutenFree }} </div>
-              <div>Price per serving: {{ recipe.pricePerServing }}$</div>
-              <div>Servings: {{ recipe.servings }} </div>
+              
             </b-card-text></b-tab>
 
 
@@ -60,9 +61,9 @@ export default {
   },
   async mounted() {
     console.log(this.recipe);
-    this.axios.get(this.recipe.image).then((i) => {
-      this.image_load = true;
-    });    
+    // this.axios.get(this.recipe.image).then((i) => {
+    //   this.image_load = true;
+    // });    
   },
     data() {
         return {
