@@ -51,11 +51,9 @@
     <b-alert class="mt-2" v-if="form.submitError" variant="warning" dismissible show>
       Search failed: {{ form.submitError }}
     </b-alert>
-    <!-- <b-card class="mt-3 md-3" header="Form Data Result">
-      <pre class="m-0"><strong>form:</strong> {{ form }}</pre>
-      <pre class="m-0"><strong>$v.form:</strong> {{ $v.form }}</pre>
-    </b-card> -->
-    <b-button type="submit" v-on:click="ShowingResults=false" variant="primary" style="width:250px;" class="ml-5 w-75" v-if="ShowingResults">Back To Search</b-button>
+    <p style="width:400px;" v-if="ShowingResults">{{form.nameRecipe}} , amount: {{form.amount}}, order by: {{form.sort}}</p>
+    <p style="width:400px;" v-if="ShowingResults">cuisine: {{form.cuisine}} , diet: {{form.diet}}, intolerance: {{form.intolerance}}</p>
+
     <RecipePreviewList v-if="ShowingResults" :key="key" title="Search result" v-bind:path="searchPath"></RecipePreviewList>
     <b-button type="submit" v-on:click="ShowingResults=false" variant="primary" style="width:250px;" class="ml-5 w-75" v-if="ShowingResults">Back To Search</b-button>
   </div>
@@ -97,7 +95,6 @@ export default {
       lastSearch: localStorage.getItem("lastSearch"),
       ShowingResults: false,
       errors: [],
-      //filter: false,
       validated: false,
       cuisines: [{ value: null, text: "", disabled: true }],
       diets: [{ value: null, text: "", disabled: true }],
@@ -121,11 +118,9 @@ export default {
     }
   },
   mounted() {
-    // console.log("mounted");
     this.cuisines.push(...cuisines);
     this.diets.push(...diets);
     this.intolerances.push(...intolerances);
-    // console.log($v);
   },
   methods: {
     validateState(param) {
@@ -142,7 +137,6 @@ export default {
         this.param = "name=" + this.form.nameRecipe + "&amount=" + this.form.amount + "&filter=" +
           this.form.filter + "&diet=" + this.form.diet + "&cuisine=" + this.form.cuisine + "&intolerances=" +
           this.form.intolerance + "&sort=" + this.form.sort;
-
         this.searchPath = "/recipes/search?" + this.param;
         this.ShowingResults = true;
         console.log(this.searchPath);
