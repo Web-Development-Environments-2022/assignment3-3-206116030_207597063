@@ -2,8 +2,7 @@
   <div class="container">
     <div v-if="recipe">
       <div class="recipe-header mt-3 mb-4">
-        <h1>{{ recipe.title }}</h1>
-        <h4>Owner Recipe: {{recipe.ownerRecipe}}</h4>
+        <h1> <b>{{ recipe.title }}</b></h1>
         <img :src="recipe.image" class="center" />
       </div>
       <div class="recipe-body">
@@ -16,8 +15,10 @@
               <div>Vegetarian: {{ recipe.vegetarian }} </div>
               <div>Vegan: {{ recipe.vegan }} </div>
               <div>Gluten Free: {{ recipe.glutenFree }} </div>
-              <div>{{recipe.WhenDoWeEat}}</div>
-              <div v-if="!recipe.id.startsWith('d')">Health score: {{ recipe.healthScore }}/100  </div>
+              <div v-if="isNaN(recipe.id)">Servings: {{ recipe.servings }}  </div>
+              <div v-if="isNaN(recipe.id)">Price per serving: {{ recipe.pricePerServing }} $  </div>
+              <div v-if="isNaN(recipe.id)">Total likes: {{ recipe.aggregateLikes }}  </div>
+
             </b-card-text></b-tab>
 
 
@@ -40,6 +41,7 @@
                 </li>
               </ol>
               <round-slider
+                class="slider"
                 v-model= value
                 start-angle="315"
                 end-angle="+270"
@@ -74,7 +76,6 @@ export default {
     try {
       let response;
       try {
-        console.log(this.$route.params.recipeId)
         response = await this.axios.get(
           "http://localhost:3000/recipes/"+this.$route.params.recipeId,
         );
@@ -85,7 +86,6 @@ export default {
         this.$router.replace("/NotFound");
         return;
       }
-      console.log(response);
       let {
         analyzedInstructions,
         instructions,
@@ -103,8 +103,7 @@ export default {
       } = response.data;
 
       var _instructions="";
-
-      if(this.$route.params.recipeId.startsWith('d')){
+      if(isNaN(this.$route.params.recipeId)){
         _instructions = analyzedInstructions;
       }
       else{
@@ -159,15 +158,20 @@ export default {
 </script>
 
 <style scoped>
-
+.slider{
+  align:center;
+  margin:auto;
+}
 .wrapped {
-  width: 60%;
+  width: 70%;
+  align:center;
+  margin:auto;
 }
 .center {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 50%;
+  width: 70%;
 }
 /* .recipe-header{
 
@@ -175,12 +179,15 @@ export default {
 h1{
   text-align:center;
   margin-bottom:20px;
+  font-family: "Times New Roman", Times, serif;
+  
 }
 img{
   margin-bottom:20px;
 }
 .recipe-body{
   margin:auto;
+  align:center;
 }
 .container{
   align:center;

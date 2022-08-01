@@ -10,12 +10,12 @@
           <RecipePreview class="recipePreview" :recipe="r" />
         </b-row>
       </ul>
-      <ul v-else-if="title=='Family recipes'">
+      <!--<ul v-else-if="title=='Family recipes'">
         {{recipes}}
         <b-row v-for="r in recipes" :key="r.id">
           <FamilyRecipe class="FamilyRecipe" :recipe="r"/>
         </b-row>
-      </ul>
+      </ul> -->
       <ul v-else>
         <b-col v-for="r in recipes" :key="r.id">
           <RecipePreview class="recipePreview" :recipe="r" />
@@ -28,12 +28,12 @@
 
 <script>
 import RecipePreview from "./RecipePreview.vue";
-import FamilyRecipe from "./FamilyRecipe.vue";
+//import FamilyRecipe from "./FamilyRecipe.vue";
 export default {
   name: "RecipePreviewList",
   components: {
     RecipePreview,
-    FamilyRecipe
+    //FamilyRecipe
   },
   props: {
     title: {
@@ -52,10 +52,6 @@ export default {
     };
   },
   mounted() {
-    // if(this.title =="Watch it again" || this.title== "My recipes"){
-    //   this.updateRecipes();
-
-    // }
     this.updateRecipes();
   },
   methods: {
@@ -65,8 +61,10 @@ export default {
         const response = await this.axios.get(
           "http://localhost:3000" + this.path,
         );
+        console.log(response);
         this.error = false;
         const recipes = response.data;
+        console.log(recipes)
         this.recipes = [];
         this.recipes.push(...recipes);
         if(this.recipes.length == 0){

@@ -26,7 +26,7 @@
       <img v-if="recipe.vegan" v-bind:src="vegen" class="recipe-props" />
       <img v-if="recipe.vegetarian" v-bind:src="vegetarian" class="recipe-props" />
       <img v-if="recipe.glutenFree" v-bind:src="glutenFree" class="recipe-props" />
-      <favorite :value="fav" :id="recipe.id"></favorite>
+      <favorite v-if="!isNaN(recipe.id)" :value="fav" :id="recipe.id"></favorite>
 
     </div>
   </span>
@@ -39,7 +39,6 @@ export default {
     favorite
   },
   async mounted() {
-    console.log(this.recipe);
     this.axios.get(this.recipe.image).then((i) => {
       this.image_load = true;
     });
@@ -49,11 +48,13 @@ export default {
     );
     
     console.log(response_fav);
+
     response_fav.data.map((fav)=>{
       if(fav.id == this.recipe.id){
         this.fav = true;
       }
     });
+
     const response_view = await this.axios.get(
           "http://localhost:3000/user/viewed"
           //this.$root.store.server_domain + "/auth/Register",
@@ -62,7 +63,6 @@ export default {
     response_view.data.map((view)=>{
       if(view.RecipeID == this.recipe.id){
         this.viewed = true;
-        console.log("true");
       }
     });
     

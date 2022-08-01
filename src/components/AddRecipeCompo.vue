@@ -60,15 +60,8 @@
                 Servings must be a numeric
                 </b-form-invalid-feedback>
             </b-form-group>  
-            <!-- <b-form-group id="input-group-analyzedInstructions" label-cols-sm="3" label="analyzed instructions:" label-for="analyzedInstructions">
-                <b-form-input id="analyzedInstructions" v-model="$v.form.analyzedInstructions.$model" type="text" :state="validateState('analyzedInstructions')">
-                </b-form-input>
-                <b-form-invalid-feedback v-if="!$v.form.analyzedInstructions.required">
-                analyzedInstructions is required
-                </b-form-invalid-feedback>
-            </b-form-group> -->
-            
 
+          
             <b-form-group id="input-group-analyzedInstructions" label-cols-sm="3" label="analyzed instructions:" label-for="analyzedInstructions">
               <br/>
               <div class="form-group" v-for="(input,k) in form.analyzedInstructions" :key="k">
@@ -105,7 +98,7 @@
             Add recipe failed: {{ form.submitError }}
         </b-alert>
 
-      {{form}}
+      
 
     </div>
 </template>

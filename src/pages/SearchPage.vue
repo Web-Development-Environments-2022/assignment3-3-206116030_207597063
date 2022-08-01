@@ -3,7 +3,7 @@
     <h1 class="title">Search Page</h1>
     <b-form @submit.prevent="onSearch" @reset.prevent="onReset">
 
-      <b-form-group id="input-group-name" label-cols-sm="3" label="nameRecipe:" label-for="nameRecipe" v-if="!ShowingResults">
+      <b-form-group id="input-group-name" label-cols-sm="3" label="recipe name:" label-for="nameRecipe" v-if="!ShowingResults">
         <b-form-input id="nameRecipe" v-model="form.nameRecipe" type="text" :state="validateState('nameRecipe')">
         </b-form-input>
         <b-form-invalid-feedback v-if="!$v.form.nameRecipe.required">
@@ -46,13 +46,13 @@
 
       <b-button type="reset" variant="danger" v-if="!ShowingResults">Reset</b-button>
       <b-button type="submit" variant="primary" style="width:250px;" class="ml-5 w-75" v-if="!ShowingResults">Search</b-button>
-      <b-button type="button" variant="outline-primary" v-on:click="showLastSearch" v-if="($root.store.username) && (!lastSearch=='') && (!ShowingResults)">Last search</b-button>
+      <b-button type="button" class="research" variant="warning" v-on:click="showLastSearch" v-if="($root.store.username) && (!lastSearch=='') && (!ShowingResults)">Last search</b-button>
     </b-form>
     <b-alert class="mt-2" v-if="form.submitError" variant="warning" dismissible show>
       Search failed: {{ form.submitError }}
     </b-alert>
     <p style="width:400px;" v-if="ShowingResults">{{form.nameRecipe}} , amount: {{form.amount}}, order by: {{form.sort}}</p>
-    <p style="width:400px;" v-if="ShowingResults">cuisine: {{form.cuisine}} , diet: {{form.diet}}, intolerance: {{form.intolerance}}</p>
+    <p style="width:400px;" v-if="ShowingResults && form.filter">cuisine: {{form.cuisine}} , diet: {{form.diet}}, intolerance: {{form.intolerance}}</p>
 
     <RecipePreviewList v-if="ShowingResults" :key="key" title="Search result" v-bind:path="searchPath"></RecipePreviewList>
     <b-button type="submit" v-on:click="ShowingResults=false" variant="primary" style="width:250px;" class="ml-5 w-75" v-if="ShowingResults">Back To Search</b-button>
@@ -132,7 +132,7 @@ export default {
         this.form.cuisine = this.form.cuisine == '' ? "None" : this.form.cuisine;
         this.form.diet = this.form.diet == '' ? "None" : this.form.diet;
         this.form.intolerance = this.form.intolerance == '' ? "None" : this.form.intolerance;
-        this.form.filter = this.form.filter == false ? "0" : "1";
+        this.form.filter = this.form.filter == false ? 0 : 1;
 
         this.param = "name=" + this.form.nameRecipe + "&amount=" + this.form.amount + "&filter=" +
           this.form.filter + "&diet=" + this.form.diet + "&cuisine=" + this.form.cuisine + "&intolerances=" +
@@ -201,5 +201,19 @@ export default {
 <style lang="scss" scoped>
 .container {
   max-width: 500px;
+}
+.sticky{
+  position:fixed;
+}
+.research{
+  margin-top: 15px;
+  align: center;
+
+}
+h1{
+  text-align:center;
+  margin-bottom:20px;
+  font-family: "Times New Roman", Times, serif;
+  
 }
 </style>
