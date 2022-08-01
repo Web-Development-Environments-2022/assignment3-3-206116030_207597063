@@ -4,7 +4,9 @@
       <div class="recipe-header mt-3 mb-4">
         <h1>{{ recipe.title }}</h1>
         <h4>Owner Recipe: {{recipe.ownerRecipe}}</h4>
-        <img :src="recipe.image" class="center" />
+        <!-- <img :src="image1"/> -->
+        <img :src="getImgUrl()" width="300" height="500" />
+        <!-- <img :src="image" class="center" /> -->
       </div>
       <div class="recipe-body">
         <div class="wrapper">
@@ -32,15 +34,25 @@
                 </li>
               </ul>
             </b-card-text></b-tab>
+
             <b-tab title="Instructions"><b-card-text>
               <ol>
-                <li v-for="s in recipe._instructions" :key="s.number">
-                  <b-form-checkbox>
+                <li v-for="s in recipe.analyzedInstructions" :key="s.number">
+                  <b-form-checkbox v-on:change="increment($event)">
                   {{ s.step }}
                 </b-form-checkbox>
                 </li>
               </ol>
-            </b-card-text></b-tab>
+              <round-slider
+                class="slider"
+                v-model= value
+                start-angle="315"
+                end-angle="+270"
+                line-cap="round"
+                radius="120"
+                readOnly="true"
+                />
+              </b-card-text></b-tab>
     </b-tabs>
       </div>
     </div>
@@ -52,32 +64,89 @@
 </template>
 
 <script>
+import RoundSlider from 'vue-round-slider'
 export default {
-    props: {
+  props: {
     recipe: {
       type: Object,
       required: true
     }
   },
+  components: {
+    RoundSlider,
+  },
   async mounted() {
-    console.log(this.recipe);
-    // this.axios.get(this.recipe.image).then((i) => {
-    //   this.image_load = true;
-    // });    
+    console.log(this.recipe.image);
+    console.log(typeof(this.recipe.image));
   },
     data() {
         return {
             image_load: false,
-            vegen: require('../assets/vegan.png'),
+            vegan: require('../assets/vegan.png'),
             vegetarian: require('../assets/vegetarian.png'),
             glutenFree: require('../assets/gluten-free.png'),
+            count: 0,
+            value:0,
         }
     },
-
+    methods:{
+    increment(event){
+        const isChecked = event;
+        if(isChecked){
+            this.count++;
+        }else{
+            this.count--;
+        } 
+        this.value = (this.count/this.recipe.analyzedInstructions.length)*100
+    },
+    getImgUrl(){
+      return require('../assets/'+this.recipe.image);
+    }
+  },
 
 }
 </script>
 
-<style>
+<style scoped>
+.slider{
+  align:center;
+  margin:auto;
+}
+.wrapped {
+  width: 70%;
+  align:center;
+  margin:auto;
+}
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+}
+/* .recipe-header{
 
+} */
+h1{
+  text-align:center;
+  margin-bottom:20px;
+  font-family: "Times New Roman", Times, serif;
+  
+}
+h4{
+  text-align:center;
+  margin-bottom:15px;
+  font-family: "Times New Roman", Times, serif;
+  
+}
+img{
+  margin-bottom:20px;
+  align-items: center;
+}
+.recipe-body{
+  margin:auto;
+  align:center;
+}
+.container{
+  align:center;
+}
 </style>

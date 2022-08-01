@@ -10,12 +10,11 @@
           <RecipePreview class="recipePreview" :recipe="r" />
         </b-row>
       </ul>
-      <!--<ul v-else-if="title=='Family recipes'">
-        {{recipes}}
+      <ul v-else-if="title=='Family recipes'">
         <b-row v-for="r in recipes" :key="r.id">
           <FamilyRecipe class="FamilyRecipe" :recipe="r"/>
         </b-row>
-      </ul> -->
+      </ul>
       <ul v-else>
         <b-col v-for="r in recipes" :key="r.id">
           <RecipePreview class="recipePreview" :recipe="r" />
@@ -28,12 +27,12 @@
 
 <script>
 import RecipePreview from "./RecipePreview.vue";
-//import FamilyRecipe from "./FamilyRecipe.vue";
+import FamilyRecipe from "./FamilyRecipe.vue";
 export default {
   name: "RecipePreviewList",
   components: {
     RecipePreview,
-    //FamilyRecipe
+    FamilyRecipe
   },
   props: {
     title: {
