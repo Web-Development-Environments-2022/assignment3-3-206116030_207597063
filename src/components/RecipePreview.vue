@@ -32,7 +32,7 @@
       <img v-if="recipe.vegan" v-bind:src="vegen" class="recipe-props" />
       <img v-if="recipe.vegetarian" v-bind:src="vegetarian" class="recipe-props" />
       <img v-if="recipe.glutenFree" v-bind:src="glutenFree" class="recipe-props" />
-      <favorite v-if="!isNaN(recipe.id)" :value="fav" :id="recipe.id"></favorite>
+      <favorite v-if="!isNaN(recipe.id) && $root.store.username" :value="fav" :id="recipe.id"></favorite>
 
     </div>
   </span>
@@ -47,11 +47,7 @@ export default {
   async mounted() {
     try{
       if(isNaN(this.recipe.id)){
-        console.log(this.recipe.id);
-        console.log(typeof(this.recipe.id));
-        console.log(this.recipe.id.startsWith("f"));
         if(this.recipe.id.startsWith("f")){
-          console.log(this.recipe.image);
           this.image = require('../assets/'+this.recipe.image);
           this.image_load = true;
         }
@@ -60,7 +56,6 @@ export default {
           this.image_load = true;
         });
         }
-
       }
       else{
           this.axios.get(this.recipe.image).then((i) => {
@@ -83,16 +78,20 @@ export default {
       });
     }
 
-    const response_view = await this.axios.get(
-          //"http://localhost:3000/user/viewed"
-          this.$root.store.server_domain + "/user/viewed",
-    );
-    console.log(response_view);
-    response_view.data.map((view)=>{
-      if(view.RecipeID == this.recipe.id){
-        this.viewed = true;
-      }
-    });
+
+    if($root.store.username){
+        const response_view = await this.axios.get(
+        //"http://localhost:3000/user/viewed"
+        this.$root.store.server_domain + "/user/viewed",
+      );
+      console.log(response_view);
+      response_view.data.map((view)=>{
+        if(view.RecipeID == this.recipe.id){
+          this.viewed = true;
+        }
+      });
+    }
+
     }
     catch (err) {
         console.log(err.response);
