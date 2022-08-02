@@ -66,8 +66,8 @@ export default {
       try {
 
         const response = await this.axios.post(
-          "http://localhost:3000/auth/Login",
-          //this.$root.store.server_domain +"/auth/Login",
+          //"http://localhost:3000/auth/Login",
+          this.$root.store.server_domain +"/auth/Login",
 
           {
             username: this.form.username,

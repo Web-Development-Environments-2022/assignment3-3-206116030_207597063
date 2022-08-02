@@ -56,8 +56,8 @@ export default {
       }
 
     const response_fav = await this.axios.get(
-          "http://localhost:3000/user/favorites"
-          //this.$root.store.server_domain + "/auth/Register",
+          //"http://localhost:3000/user/favorites"
+          this.$root.store.server_domain + "/user/favorites",
     );
     
     console.log(response_fav);
@@ -69,8 +69,8 @@ export default {
     });
 
     const response_view = await this.axios.get(
-          "http://localhost:3000/user/viewed"
-          //this.$root.store.server_domain + "/auth/Register",
+          //"http://localhost:3000/user/viewed"
+          this.$root.store.server_domain + "/user/viewed",
     );
     console.log(response_view);
     response_view.data.map((view)=>{

@@ -213,8 +213,8 @@ export default {
       console.log(this.form.analyzedInstructions); 
         try {  
         const response = await this.axios.post(
-          "http://localhost:3000/recipes/addRecipe",
-          //this.$root.store.server_domain + "/recipe/addRecipe",
+          //"http://localhost:3000/recipes/addRecipe",
+          this.$root.store.server_domain + "/recipe/addRecipe",
 
           {
             title: this.form.name,

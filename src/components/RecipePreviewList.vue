@@ -53,7 +53,8 @@ export default {
       try {
         console.log(this.path);
         const response = await this.axios.get(
-          "http://localhost:3000" + this.path,
+          //"http://localhost:3000" + this.path,
+          this.$root.store.server_domain +this.path,
         );
         console.log(response);
         this.error = false;

@@ -41,8 +41,8 @@ export default{
         addToFav: async function(){
             try {
                 const response = await this.axios.post(
-                "http://localhost:3000/user/favoritesPost",
-            //this.$root.store.server_domain +"/auth/Login",
+                //"http://localhost:3000/user/favoritesPost",
+                this.$root.store.server_domain +"/user/favoritesPost",
 
             {
                 recipeId: this.id,

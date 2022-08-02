@@ -78,7 +78,8 @@ export default {
       let response;
       try {
         response = await this.axios.get(
-          "http://localhost:3000/recipes/"+this.$route.params.recipeId,
+          this.$root.store.server_domain+"/"+this.$route.params.recipeId,
+          //"http://localhost:3000/recipes/"+this.$route.params.recipeId,
         );
 
         if (response.status !== 200) this.$router.replace("/NotFound");
