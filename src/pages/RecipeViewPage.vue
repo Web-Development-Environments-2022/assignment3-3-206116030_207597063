@@ -2,61 +2,81 @@
   <div class="container">
     <div v-if="recipe">
       <div class="recipe-header mt-3 mb-4">
-        <h1>{{ recipe.title }}</h1>
+        <h1> <b>{{ recipe.title }}</b></h1>
         <img :src="recipe.image" class="center" />
       </div>
       
       <div class="recipe-body">
         <div class="wrapper">
           <div class="wrapped">
-            <div class="mb-3">
-              <div><b>General Information:</b></div>
-              <div>Ready in {{ recipe.readyInMinutes }} minutes</div>
-              <div>Likes: {{ recipe.aggregateLikes }} likes</div>
+          <b-tabs pills card>
+
+            <b-tab title="General Information" active><b-card-text>
+            <div>Ready in {{ recipe.readyInMinutes }} minutes</div>
               <div>Vegetarian: {{ recipe.vegetarian }} </div>
               <div>Vegan: {{ recipe.vegan }} </div>
               <div>Gluten Free: {{ recipe.glutenFree }} </div>
-              <div>Price per serving: {{ recipe.pricePerServing }}$</div>
-              <div>Servings: {{ recipe.servings }} </div>
-              <div>Health score: {{ recipe.healthScore }}/100  </div>
+              <div v-if="isNaN(recipe.id)">Servings: {{ recipe.servings }}  </div>
+              <div v-if="isNaN(recipe.id)">Price per serving: {{ recipe.pricePerServing }} $  </div>
+              <div v-if="isNaN(recipe.id)">Total likes: {{ recipe.aggregateLikes }}  </div>
 
-            </div>
-            <b>Ingredients:</b>
-            <ul>
-              <li
-                v-for="(r, index) in recipe.extendedIngredients"
-                :key="index + '_' + r.id"
-              >
-                {{ r.original }}
-              </li>
-            </ul>
-          </div>
-          <div class="wrapped">
-            <b>Instructions:</b>
-            <ol>
-              <li v-for="s in recipe._instructions" :key="s.number">
-                {{ s.step }}
-              </li>
-            </ol>
-          </div>
+            </b-card-text></b-tab>
+
+
+            <b-tab title="Ingredients"><b-card-text>
+              <ul>
+                <li
+                  v-for="(r, index) in recipe.extendedIngredients"
+                  :key="index + '_' + r.id"
+                >
+                  {{ r.original }}
+                </li>
+              </ul>
+            </b-card-text></b-tab>
+            <b-tab title="Instructions"><b-card-text>
+              <ol>
+                <li v-for="s in recipe._instructions" :key="s.number">
+                  <b-form-checkbox v-on:change="increment($event)">
+                  {{ s.step }}
+                </b-form-checkbox>
+                </li>
+              </ol>
+              <round-slider
+                class="slider"
+                v-model= value
+                start-angle="315"
+                end-angle="+270"
+                line-cap="round"
+                radius="120"
+                readOnly="true"
+                />
+              </b-card-text></b-tab>
+      </b-tabs>
         </div>
       </div>
     </div>
-  </div>
-</template>
+      </div>
+          </div>
 
-<script>
+  </template>
+
+  <script>
+import RoundSlider from 'vue-round-slider'
 export default {
+  components: {
+    RoundSlider,
+  },
   data() {
     return {
-      recipe: null
+      recipe: null,
+      count: 0,
+      value:0
     };
   },
   async created() {
     try {
       let response;
       try {
-        console.log(this.$route.params.recipeId)
         response = await this.axios.get(
           "http://localhost:3000/recipes/"+this.$route.params.recipeId,
         );
@@ -67,7 +87,6 @@ export default {
         this.$router.replace("/NotFound");
         return;
       }
-      console.log(response);
       let {
         analyzedInstructions,
         instructions,
@@ -80,16 +99,22 @@ export default {
         vegan,
         glutenFree,
         pricePerServing,
-        serving,
+        servings,
         healthScore
       } = response.data;
 
-      let _instructions = analyzedInstructions
+      var _instructions="";
+      if(isNaN(this.$route.params.recipeId)){
+        _instructions = analyzedInstructions;
+      }
+      else{
+        _instructions = analyzedInstructions
         .map((fstep) => {
           fstep.steps[0].step = fstep.name + fstep.steps[0].step;
           return fstep.steps;
         })
         .reduce((a, b) => [...a, ...b], []);
+      }
 
       let _recipe = {
         instructions,
@@ -104,30 +129,52 @@ export default {
         vegan,
         glutenFree,
         pricePerServing,
-        serving,
+        servings,
         healthScore
       };
 
       this.recipe = _recipe;
+      if(this.$route.params.recipeId){
+        this.recipe.vegan = this.recipe.vegan == '0' ? "false" : "true";
+        this.recipe.vegetarian = this.recipe.vegetarian == '0' ? "false" : "true";
+        this.recipe.glutenFree = this.recipe.glutenFree == '0' ? "false" : "true";
+      }
     } catch (error) {
       console.log(error);
+      this.$root.toast("OOPS", "We were unable to fully load the page, please try again", "danger");
+
+    }
+  },
+  methods:{
+    increment(event){
+        const isChecked = event;
+        if(isChecked){
+            this.count++;
+        }else{
+            this.count--;
+        } 
+        this.value = (this.count/this.recipe._instructions.length)*100
+
     }
   }
 };
 </script>
 
 <style scoped>
-.wrapper {
-  display: flex;
+.slider{
+  align:center;
+  margin:auto;
 }
 .wrapped {
-  width: 50%;
+  width: 70%;
+  align:center;
+  margin:auto;
 }
 .center {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 50%;
+  width: 70%;
 }
 /* .recipe-header{
 
@@ -135,8 +182,17 @@ export default {
 h1{
   text-align:center;
   margin-bottom:20px;
+  font-family: "Times New Roman", Times, serif;
+  
 }
 img{
   margin-bottom:20px;
+}
+.recipe-body{
+  margin:auto;
+  align:center;
+}
+.container{
+  align:center;
 }
 </style>

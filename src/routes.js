@@ -28,14 +28,29 @@ const routes = [
     component: () => import("./pages/SearchPage"),
   },
   {
+    path: "/favorites",
+    name: "favorites",
+    component: () => import("./pages/FavoritePage"),
+  },
+  {
+    path: "/myRecipes",
+    name: "myRecipes",
+    component: () => import("./pages/MyRecipes"),
+  },
+  {
     path: "/recipe/:recipeId",
     name: "recipe",
     component: () => import("./pages/RecipeViewPage"),
   },
   {
-    path: "/addRecipe",
-    name: "addRecipe",
-    component: () => import("./pages/addRecipe"),
+    path: "/recipeFamily/:recipe",
+    name: "recipeFamily",
+    component: () => import("./pages/FamilyRecipeViewPage"),
+  },
+  {
+    path: "/recipe/getfamilyRecipes",
+    name: "OurFamilyRecipes",
+    component: () => import("./pages/OurFamilyRecipes"),
   },
   {
     path: "*",

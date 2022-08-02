@@ -30,24 +30,24 @@
                 </b-form-invalid-feedback>
             </b-form-group>  
             <b-form-group id="input-group-vegan" label-cols-sm="3" label="vegan:" label-for="vegan">
-                <input type="radio" id="vegan-true" value="1" v-model="$v.form.vegan.$model" />
+                <input type="radio" id="vegan-true" value=1 v-model="$v.form.vegan.$model" />
                 <label for="one">True</label>
 
-                <input type="radio" id="vegan-false" value="0" v-model="$v.form.vegan.$model"/>
+                <input type="radio" id="vegan-false" value=0 v-model="$v.form.vegan.$model"/>
                 <label for="two">False</label>
             </b-form-group>
             <b-form-group id="input-group-vegeterian" label-cols-sm="3" label="vegeterian:" label-for="vegeterian">
-                <input type="radio" id="vegeterian-true" value="1" v-model="$v.form.vegeterian.$model" />
+                <input type="radio" id="vegeterian-true" value=1 v-model="$v.form.vegeterian.$model" />
                 <label for="one">True</label>
 
-                <input type="radio" id="vegeterian-false" value="0" v-model="$v.form.vegeterian.$model"/>
+                <input type="radio" id="vegeterian-false" value=0 v-model="$v.form.vegeterian.$model"/>
                 <label for="two">False</label>
             </b-form-group>
             <b-form-group id="input-group-glutenFree" label-cols-sm="3" label="glutenFree:" label-for="glutenFree">
-                <input type="radio" id="glutenFree-true" value="1" v-model="$v.form.glutenFree.$model" />
+                <input type="radio" id="glutenFree-true" value=1 v-model="$v.form.glutenFree.$model" />
                 <label for="one">True</label>
 
-                <input type="radio" id="glutenFree-false" value="0" v-model="$v.form.glutenFree.$model"/>
+                <input type="radio" id="glutenFree-false" value=0 v-model="$v.form.glutenFree.$model"/>
                 <label for="two">False</label>
             </b-form-group>
             <b-form-group id="input-group-servings" label-cols-sm="3" label="How many servings?" label-for="servings">
@@ -60,14 +60,23 @@
                 Servings must be a numeric
                 </b-form-invalid-feedback>
             </b-form-group>  
+
+          
             <b-form-group id="input-group-analyzedInstructions" label-cols-sm="3" label="analyzed instructions:" label-for="analyzedInstructions">
-                <b-form-input id="analyzedInstructions" v-model="$v.form.analyzedInstructions.$model" type="text" :state="validateState('analyzedInstructions')">
-                </b-form-input>
-                <b-form-invalid-feedback v-if="!$v.form.analyzedInstructions.required">
-                analyzedInstructions is required
-                </b-form-invalid-feedback>
+              <br/>
+              <div class="form-group" v-for="(input,k) in form.analyzedInstructions" :key="k">
+                  {{"step "+ k}}       
+                  <b-form-input placeholder="instruction" id="instruction" v-model="input.instruction" required></b-form-input>
+                  <span>
+                    <i class="fas fa-minus-circle" @click="remove(k.toExponential,'instructions')" v-show="k || ( !k && form.analyzedInstructions.length > 1)"> <img src="../assets/icons8-minus-48.png"/></i>
+                    <i class="fas fa-plus-circle" @click="add(k,'instructions')" v-show="k == form.analyzedInstructions.length-1"><img src="../assets/icons8-plus-48.png"/></i>
+                  </span>       
+              </div>
             </b-form-group>
-            
+
+
+
+
             <b-form-group id="input-group-ingredients" label-cols-sm="3" label="ingredients:" label-for="ingredients">
               <br/>
               <div class="form-group" v-for="(input,k) in form.ingredients" :key="k">
@@ -88,15 +97,14 @@
         <b-alert class="mt-2" v-if="form.submitError" variant="warning" dismissible show>
             Add recipe failed: {{ form.submitError }}
         </b-alert>
-        <b-card class="mt-3 md-3" header="Form Data Result">
-            <pre class="m-0"><strong>form:</strong> {{ form }}</pre>
-            <pre class="m-0"><strong>$v.form:</strong> {{ $v.form }}</pre>
-        </b-card>
-        
+
+      
+
     </div>
 </template>
 
 <script>
+import { BIconEmojiSmileUpsideDown } from "bootstrap-vue";
 import {
   required,
   alpha,
@@ -110,12 +118,18 @@ export default {
                 name: "",
                 image: "",
                 readyInMinutes: "",
-                vegan: "0",
-                vegeterian: "0",
-                glutenFree: "0",
+                vegan: 0,
+                vegeterian: 0,
+                glutenFree: 0,
                 servings: "",
-                analyzedInstructions: "",
+                //analyzedInstructions: "",
                 submitError: undefined,
+                analyzedInstructions: [
+                  {
+                    number: 0,
+                    instruction: ''
+                  }
+                ],
                 ingredients: [
                   {
                     name: '',
@@ -168,26 +182,45 @@ export default {
       const { $dirty, $error } = this.$v.form[param];
       return $dirty ? !$error : null;
     },
-    add(index) {
-      this.form.ingredients.push({
+    add(index,type) {
+      if(type === 'instructions'){
+        this.form.analyzedInstructions.push({
+          number: 0,
+          instruction: ''
+        })
+      }
+      else{
+        this.form.ingredients.push({
                     name: '',
                     amount: '',
                     unit: 'unit' });
+      }
     },
-    remove(index) {
+    remove(index,type) {
+      if(type === 'instructions'){
+      this.form.analyzedInstructions.splice(index, 1);
+      }
+      else{
       this.form.ingredients.splice(index, 1);
+      }
     },
     async Save() {
-        try {
+      var i = 0;
+      for (let x of this.form.analyzedInstructions) {
+        x.number = i;
+        i++; 
+      }
+      console.log(this.form.analyzedInstructions); 
+        try {  
         const response = await this.axios.post(
-          "http://localhost:3000/recipe/addRecipe",
+          "http://localhost:3000/recipes/addRecipe",
           //this.$root.store.server_domain + "/recipe/addRecipe",
 
           {
             title: this.form.name,
             recipeImage: this.form.image,
             readyInMinutes: this.form.readyInMinutes,
-            vegen: this.form.vegen,
+            vegan: this.form.vegan,
             vegeterian: this.form.vegeterian,
             glutenFree: this.form.glutenFree,
             servings: this.form.servings,
@@ -195,10 +228,14 @@ export default {
             ingredients: this.form.ingredients
           }
         );
-        this.$router.push("/search");
-        // console.log(response);
+        this.$root.toast("Great", "The recipe was added successfully", "success");
+        this.$nextTick(() => {
+          this.$bvModal.hide('bv-modal-example')
+        })
+        this.$router.push("/myRecipes");
       } catch (err) {
         console.log(err.response);
+        this.$root.toast("OOPS", "We were not able to upload the recipe, please try again", "danger");
         this.form.submitError = err.response.data.message;
       }
     },
@@ -216,11 +253,16 @@ export default {
         name: "",
         image: "",
         readyInMinutes: "",
-        vegan: "0",
-        vegeterian: "0",
-        glutenFree: "0",
+        vegan: 0,
+        vegeterian: 0,
+        glutenFree: 0,
         servings: "",
-        analyzedInstructions: "",
+        analyzedInstructions: [
+                  {
+                    number: 0,
+                    instruction: ''
+                  }
+                ],
         ingredients: [
                   {
                     name: '',

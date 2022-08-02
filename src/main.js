@@ -2,13 +2,17 @@ import Vue from "vue";
 import App from "./App.vue";
 import VueAxios from "vue-axios";
 import axios from "axios";
+import RoundSlider from 'vue-round-slider'
 
 import routes from "./routes";
 import VueRouter from "vue-router";
 Vue.use(VueRouter);
+import { ModalPlugin } from 'bootstrap-vue'
+Vue.use(ModalPlugin)
 const router = new VueRouter({
   routes,
 });
+import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 
 import Vuelidate from "vuelidate";
 import "bootstrap/dist/css/bootstrap.css";
@@ -66,6 +70,8 @@ Vue.use(VueAxios, axios);
 
 Vue.config.productionTip = false;
 
+Vue.use(BootstrapVue)
+Vue.use(BootstrapVueIcons)
 const shared_data = {
   username: localStorage.username,
   login(username) {

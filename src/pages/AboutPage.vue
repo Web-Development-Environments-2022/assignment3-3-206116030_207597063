@@ -16,7 +16,7 @@
             Love to swim and spend some time with my family. This is my first web full stack project and i hope you enjoy it.
             </b-card-text>
 
-            <b-button href="https://www.linkedin.com/in/amit-partuk-15385a218/" variant="primary">Amit`s linkedIn</b-button>
+            <b-button href="https://www.linkedin.com/in/amit-partuk-15385a218/" class="button">Amit`s linkedIn</b-button>
             </b-card>
         </b-col>
         <b-col>
@@ -34,7 +34,7 @@
             Love to run and drink beer with my friends.
             </b-card-text>
 
-            <b-button href="https://www.linkedin.com/in/yuval-felendler-58a016233/" variant="primary">Yuval`s LinkedIn</b-button>
+            <b-button href="https://www.linkedin.com/in/yuval-felendler-58a016233/" class="button">Yuval`s LinkedIn</b-button>
             </b-card>
         </b-col>
         <b-col>
@@ -55,9 +55,36 @@
             ready to cook Chef?
             </b-card-text>
 
-            <b-button :to="{ name: 'main' }" variant="primary">To the Kitchen</b-button>
+            <b-button :to="{ name: 'main' }" class="button">To the Kitchen</b-button>
             </b-card>
         </b-col>
     </b-row>
   </div>
 </template>
+
+<style>
+.button {
+  display: inline-block;
+  padding: 10px 50px;
+  font-size: 15px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #92817a;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 5px #999;
+}
+
+.button:hover {
+  background-color: #854d27
+  }
+
+.button:active {
+  background-color: #854d27;
+  box-shadow: 0 3px #666;
+  transform: translateY(4px);
+}
+</style>
