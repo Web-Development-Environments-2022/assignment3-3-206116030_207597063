@@ -5,6 +5,7 @@
         <h1>{{ recipe.title }}</h1>
         <img :src="recipe.image" class="center" />
       </div>
+      
       <div class="recipe-body">
         <div class="wrapper">
           <div class="wrapped">
