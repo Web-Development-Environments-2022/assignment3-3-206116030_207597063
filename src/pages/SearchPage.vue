@@ -1,6 +1,8 @@
 <template>
   <div class="container">
     <h1 class="title">Search Page</h1>
+      <b-button id="back" type="submit" v-on:click="ShowingResults=false" variant="primary" v-if="ShowingResults">Back To Search</b-button>
+
     <b-form @submit.prevent="onSearch" @reset.prevent="onReset">
 
       <b-form-group id="input-group-name" label-cols-sm="3" label="recipe name:" label-for="nameRecipe" v-if="!ShowingResults">
@@ -55,7 +57,7 @@
     <p style="width:400px;" v-if="ShowingResults && form.filter">cuisine: {{form.cuisine}} , diet: {{form.diet}}, intolerance: {{form.intolerance}}</p>
 
     <RecipePreviewList v-if="ShowingResults" :key="key" title="Search result" v-bind:path="searchPath"></RecipePreviewList>
-    <b-button type="submit" v-on:click="ShowingResults=false" variant="primary" style="width:250px;" class="ml-5 w-75" v-if="ShowingResults">Back To Search</b-button>
+    <b-button id="back" type="submit" v-on:click="ShowingResults=false" variant="primary" class="ml-5 w-75" v-if="ShowingResults">Back To Search</b-button>
   </div>
 </template>
 
@@ -213,7 +215,13 @@ export default {
 h1{
   text-align:center;
   margin-bottom:20px;
-  font-family: "Times New Roman", Times, serif;
-  
+  font-family: "Times New Roman", Times, serif; 
+}
+#back{
+  position: fixed;
+  width:250px;
+  overflow: hidden;
+  right: 200px;
+
 }
 </style>

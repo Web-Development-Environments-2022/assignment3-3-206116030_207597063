@@ -4,10 +4,14 @@
       <div class="recipe-header mt-3 mb-4">
         <h1>{{ recipe.title }}</h1>
         <h4>Owner Recipe: {{recipe.ownerRecipe}}</h4>
-        <!-- <img :src="image1"/> -->
         <img :src="getImgUrl()" width="300" height="500" />
-        <!-- <img :src="image" class="center" /> -->
       </div>
+      <div>
+        <img v-if="recipe.vegan" v-bind:src="vegan" class="recipe-props" />
+        <img v-if="recipe.vegetarian" v-bind:src="vegetarian" class="recipe-props" />
+        <img v-if="recipe.glutenFree" v-bind:src="glutenFree" class="recipe-props" />
+      </div>
+
       <div class="recipe-body">
         <div class="wrapper">
           <div class="wrapped">
@@ -16,10 +20,10 @@
             <b-tab title="General Information" active><b-card-text>
             <div>{{recipe.WhenDoWeEat}}</div>
             <div>Ready in {{ recipe.readyInMinutes }} minutes</div>
-              <div>Likes: {{ recipe.aggregateLikes }} likes</div>
-              <div>Vegetarian: {{ recipe.vegetarian }} </div>
-              <div>Vegan: {{ recipe.vegan }} </div>
-              <div>Gluten Free: {{ recipe.glutenFree }} </div>
+            <div>Likes: {{ recipe.aggregateLikes }} likes</div>
+            <div>Vegetarian: {{ recipe.vegetarian }} </div>
+            <div>Vegan: {{ recipe.vegan }} </div>
+            <div>Gluten Free: {{ recipe.glutenFree }} </div>
               
             </b-card-text></b-tab>
 
@@ -148,5 +152,12 @@ img{
 }
 .container{
   align:center;
+}
+.recipe-props{
+  height: 35px;  
+  border-radius: 50%;
+  width:35px;
+  text-align: center;
+  margin-left: 12px;
 }
 </style>
