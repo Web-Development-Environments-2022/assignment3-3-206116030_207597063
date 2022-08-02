@@ -1,8 +1,13 @@
 <template>
-  <span class="recipe-preview">
-    <router-link :to="{ name: 'recipe', params: { recipeId: recipe.id } }">
+  <span class="recipe-preview">  
+    <router-link v-if="!isNaN(recipe.id)" :to="{ name: 'recipe', params: { recipeId: recipe.id } }">
     <div class="recipe-body">
       <img  title="Click for full details" v-if="image_load" :src="recipe.image" class="recipe-image" />
+    </div>
+    </router-link>
+    <router-link v-if="isNaN(recipe.id)" :to="{ name: 'recipeFamily', params: { recipe: recipe } }">
+    <div class="recipe-body">
+      <img  title="Click for full details" v-if="image_load" :src="image" class="recipe-image" />
     </div>
     </router-link>
 
@@ -40,9 +45,16 @@ export default {
   },
   async mounted() {
     try{
-    this.axios.get(this.recipe.image).then((i) => {
-      this.image_load = true;
-    });
+      if(isNaN(this.recipe.id)){
+        this.image = require('../assets/'+this.recipe.image);
+        this.image_load = true;
+      }
+      else{
+        this.axios.get(this.recipe.image).then((i) => {
+        this.image_load = true;
+        });
+      }
+
     const response_fav = await this.axios.get(
           "http://localhost:3000/user/favorites"
           //this.$root.store.server_domain + "/auth/Register",
@@ -80,6 +92,7 @@ export default {
       vegen: require('../assets/vegan.png'),
       vegetarian: require('../assets/vegetarian.png'),
       glutenFree: require('../assets/gluten-free.png') ,
+      image: ""
     };
   },
   props: {
@@ -111,8 +124,8 @@ export default {
   margin-top: auto;
   margin-bottom: auto;
   display: block;
-  width: 98%;
-  height: auto;
+  width: 200px;
+  height: 300px;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;
