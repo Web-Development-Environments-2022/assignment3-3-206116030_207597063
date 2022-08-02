@@ -140,6 +140,8 @@ export default {
       }
     } catch (error) {
       console.log(error);
+      this.$root.toast("OOPS", "We were unable to fully load the page, please try again", "danger");
+
     }
   },
   methods:{

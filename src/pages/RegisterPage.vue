@@ -183,12 +183,15 @@ export default {
       } catch (err) {
         console.log(err.response);
         this.form.submitError = err.response.data.message;
+        this.$root.toast("OOPS", "We were unable to complete the your register, please try again", "danger");
+
       }
     },
     onRegister() {
       // console.log("register method called");
       this.$v.form.$touch();
       if (this.$v.form.$anyError) {
+        this.$root.toast("OOPS", "Looked like you miss some details, please fill the form correctly", "warning");
         return;
       }
       // console.log("register method go");

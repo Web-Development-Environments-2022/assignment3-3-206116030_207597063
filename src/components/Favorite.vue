@@ -50,6 +50,7 @@ export default{
             );
         } catch (err) {
             console.log(err.response);
+            this.$root.toast("OOPS", "We were unable to save your favorite recipe, please try again", "danger");
         }
             }
     }

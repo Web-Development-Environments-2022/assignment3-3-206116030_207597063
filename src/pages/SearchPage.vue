@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+  <div>
     <h1 class="title">Search Page</h1>
       <b-button id="back" type="submit" v-on:click="ShowingResults=false" variant="primary" v-if="ShowingResults">Back To Search</b-button>
 
@@ -57,7 +58,10 @@
     <p style="width:400px;" v-if="ShowingResults && form.filter">cuisine: {{form.cuisine}} , diet: {{form.diet}}, intolerance: {{form.intolerance}}</p>
 
     <RecipePreviewList v-if="ShowingResults" :key="key" title="Search result" v-bind:path="searchPath"></RecipePreviewList>
-    <b-button id="back" type="submit" v-on:click="ShowingResults=false" variant="primary" class="ml-5 w-75" v-if="ShowingResults">Back To Search</b-button>
+    </div>
+    <div class="div-back">
+      <b-button id="back" variant="warning" type="submit" v-on:click="ShowingResults=false"  v-if="ShowingResults">Back To Search</b-button>
+    </div>
   </div>
 </template>
 
@@ -160,12 +164,15 @@ export default {
       } catch (err) {
         console.log(err.response);
         this.form.submitError = err.response.data.message;
+        this.$root.toast("OOPS", "We run into a problem trying to get you the best results, please try again", "danger");
+
       }
     },
     onSearch() {
       // console.log("search method called");
       this.$v.form.$touch();
       if (this.$v.form.$anyError) {
+        this.$root.toast("OOPS", "Looked like you miss some importent fields, please fill the form correctly", "warning");
         return;
       }
       // console.log("search method go");
@@ -219,9 +226,11 @@ h1{
 }
 #back{
   position: fixed;
-  width:250px;
-  overflow: hidden;
+  width:150px;
   right: 200px;
+  color:brown;
+  background-color:#FFD700;
+  border:none;
 
 }
 </style>

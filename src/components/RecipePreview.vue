@@ -39,6 +39,7 @@ export default {
     favorite
   },
   async mounted() {
+    try{
     this.axios.get(this.recipe.image).then((i) => {
       this.image_load = true;
     });
@@ -65,7 +66,11 @@ export default {
         this.viewed = true;
       }
     });
-    
+    }
+    catch (err) {
+        console.log(err.response);
+        this.$root.toast("OOPS", "We were unable to fully load the page, please try again", "danger");
+    }
   },
   data() {
     return {
