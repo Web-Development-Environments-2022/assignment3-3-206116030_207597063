@@ -12,7 +12,7 @@
     </router-link>
 
     <div class="recipe-footer">
-      <span v-if="viewed">
+      <span v-if="viewed && image_load">
         <div :title="recipe.title" class="blue-recipe-title">
           {{ recipe.title }}
         </div>
@@ -22,6 +22,7 @@
           {{ recipe.title }}
         </div>
       </span>
+  
 
 
       <ul class="recipe-overview">
@@ -46,27 +47,41 @@ export default {
   async mounted() {
     try{
       if(isNaN(this.recipe.id)){
-        this.image = require('../assets/'+this.recipe.image);
-        this.image_load = true;
+        console.log(this.recipe.id);
+        console.log(typeof(this.recipe.id));
+        console.log(this.recipe.id.startsWith("f"));
+        if(this.recipe.id.startsWith("f")){
+          console.log(this.recipe.image);
+          this.image = require('../assets/'+this.recipe.image);
+          this.image_load = true;
+        }
+        else{
+          this.axios.get(this.recipe.image).then((i) => {
+          this.image_load = true;
+        });
+        }
+
       }
       else{
-        this.axios.get(this.recipe.image).then((i) => {
-        this.image_load = true;
+          this.axios.get(this.recipe.image).then((i) => {
+          this.image_load = true;
         });
       }
+    if(!isNaN(this.recipe.id)){
 
-    const response_fav = await this.axios.get(
-          //"http://localhost:3000/user/favorites"
-          this.$root.store.server_domain + "/user/favorites",
-    );
-    
-    console.log(response_fav);
+      const response_fav = await this.axios.get(
+            //"http://localhost:3000/user/favorites"
+            this.$root.store.server_domain + "/user/favorites",
+      );
+      
+      console.log(response_fav);
 
-    response_fav.data.map((fav)=>{
-      if(fav.id == this.recipe.id){
-        this.fav = true;
-      }
-    });
+      response_fav.data.map((fav)=>{
+        if(fav.id == this.recipe.id){
+          this.fav = true;
+        }
+      });
+    }
 
     const response_view = await this.axios.get(
           //"http://localhost:3000/user/viewed"

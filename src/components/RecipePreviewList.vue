@@ -52,6 +52,7 @@ export default {
     async updateRecipes() {
       try {
         console.log(this.path);
+        console.log(this.$root.store.server_domain);
         const response = await this.axios.get(
           //"http://localhost:3000" + this.path,
           this.$root.store.server_domain +this.path,

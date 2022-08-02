@@ -3,14 +3,10 @@
     <div v-if="recipe">
       <div class="recipe-header mt-3 mb-4">
         <h1>{{ recipe.title }}</h1>
-        <h4>Owner Recipe: {{recipe.ownerRecipe}}</h4>
-        <img :src="getImgUrl()" width="300" height="500" />
+        <h4>Recipe owner: {{recipe.ownerRecipe}}</h4>
+        <img :src="getImgUrl()" class="center"  />
       </div>
-      <div>
-        <img v-if="recipe.vegan" v-bind:src="vegan" class="recipe-props" />
-        <img v-if="recipe.vegetarian" v-bind:src="vegetarian" class="recipe-props" />
-        <img v-if="recipe.glutenFree" v-bind:src="glutenFree" class="recipe-props" />
-      </div>
+
 
       <div class="recipe-body">
         <div class="wrapper">
@@ -126,7 +122,9 @@ export default {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 70%;
+  width: 60%;
+  margin-top: 20px;
+  height: 20%;
 }
 /* .recipe-header{
 
@@ -143,10 +141,7 @@ h4{
   font-family: "Times New Roman", Times, serif;
   
 }
-img{
-  margin-bottom:20px;
-  align-items: center;
-}
+
 .recipe-body{
   margin:auto;
   align:center;
