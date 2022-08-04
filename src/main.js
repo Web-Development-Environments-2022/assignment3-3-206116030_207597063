@@ -1,7 +1,9 @@
+import axios from "axios";
+axios.defaults.withCredentials = true;
 import Vue from "vue";
 import App from "./App.vue";
 import VueAxios from "vue-axios";
-import axios from "axios";
+
 
 
 import routes from "./routes";

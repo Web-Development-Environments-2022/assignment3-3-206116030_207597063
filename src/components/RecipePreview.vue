@@ -49,6 +49,7 @@ export default {
       if(isNaN(this.recipe.id)){
         if(this.recipe.id.startsWith("f")){
           this.image = require('../assets/'+this.recipe.image);
+          this.test=1;
           this.image_load = true;
         }
         else{
@@ -58,9 +59,10 @@ export default {
         }
       }
       else{
-          this.axios.get(this.recipe.image).then((i) => {
-          this.image_load = true;
-        });
+        //   this.axios.get(this.recipe.image).then((i) => {
+        //   this.image_load = true;
+        // });
+        this.image_load=true;
       }
     if(!isNaN(this.recipe.id)){
 
@@ -79,7 +81,7 @@ export default {
     }
 
 
-    if($root.store.username){
+    if(this.$root.store.username){
         const response_view = await this.axios.get(
         //"http://localhost:3000/user/viewed"
         this.$root.store.server_domain + "/user/viewed",
@@ -94,7 +96,7 @@ export default {
 
     }
     catch (err) {
-        console.log(err.response);
+        console.log(err);
         this.$root.toast("OOPS", "We were unable to fully load the page, please try again", "danger");
     }
   },
@@ -106,7 +108,8 @@ export default {
       vegen: require('../assets/vegan.png'),
       vegetarian: require('../assets/vegetarian.png'),
       glutenFree: require('../assets/gluten-free.png') ,
-      image: ""
+      image: "",
+      test: 0
     };
   },
   props: {
