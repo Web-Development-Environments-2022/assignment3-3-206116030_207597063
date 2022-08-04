@@ -32,7 +32,6 @@ export default{
             }
             if(!this.value){
                 this.value = !this.value;
-                console.log(this.value);
                 this.addToFav();
             }
 

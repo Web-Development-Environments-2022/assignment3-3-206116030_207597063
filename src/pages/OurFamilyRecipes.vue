@@ -28,6 +28,7 @@ export default {
 
 <style lang="scss" scoped>
 .FamilyRecipes {
-  margin: 10px 0 10px;
+  margin: auto;
+  align-content: center;
 }
 </style>

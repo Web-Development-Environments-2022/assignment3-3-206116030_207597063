@@ -80,8 +80,6 @@ export default {
     RoundSlider,
   },
   async mounted() {
-    console.log(this.recipe.image);
-    console.log(typeof(this.recipe.image));
   },
     data() {
         return {

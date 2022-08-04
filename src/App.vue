@@ -173,7 +173,7 @@ export default {
   text-align:center;
 }
 .mail-input{
-  width:20px;
+  width:100px;
   margin-top:7px;
 }
 .logo{

@@ -2,14 +2,13 @@
   <span class="recipe-preview">  
     <router-link v-if="!isNaN(recipe.id)" :to="{ name: 'recipe', params: { recipeId: recipe.id } }">
     <div class="recipe-body">
-      <img  title="Click for full details" v-if="image_load" :src="recipe.image" class="recipe-image" />
+      <img  title="Click for full details" v-if="image_load && !isNaN(recipe.id)" :src="recipe.image" class="recipe-image" />
+      <img  title="Click for full details" v-if="image_load && isNaN(recipe.id) && recipe.id.startsWith('f')" :src="recipe.image" class="recipe-image1" />
+      <img  title="Click for full details" v-if="image_load && isNaN(recipe.id) && recipe.id.startsWith('d')" :src="recipe.image" class="recipe-image" />
+
     </div>
     </router-link>
-    <router-link v-if="isNaN(recipe.id)" :to="{ name: 'recipeFamily', params: { recipe: recipe } }">
-    <div class="recipe-body">
-      <img  title="Click for full details" v-if="image_load" :src="image" class="recipe-image" />
-    </div>
-    </router-link>
+
 
     <div class="recipe-footer">
       <span v-if="viewed && image_load">
@@ -71,7 +70,6 @@ export default {
             this.$root.store.server_domain + "/user/favorites",
       );
       
-      console.log(response_fav);
 
       response_fav.data.map((fav)=>{
         if(fav.id == this.recipe.id){
@@ -86,7 +84,6 @@ export default {
         //"http://localhost:3000/user/viewed"
         this.$root.store.server_domain + "/user/viewed",
       );
-      console.log(response_view);
       response_view.data.map((view)=>{
         if(view.RecipeID == this.recipe.id){
           this.viewed = true;
@@ -135,7 +132,7 @@ export default {
   position: relative;
 }
 
-.recipe-preview .recipe-body .recipe-image {
+.recipe-preview .recipe-body {
   margin-left: auto;
   margin-right: auto;
   margin-top: auto;
@@ -146,6 +143,15 @@ export default {
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;
+}
+.recipe-image{
+  width:100%;
+  height: 100%;
+}
+
+.recipe-image{
+  width:200px;
+  height:200px;
 }
 
 .recipe-preview .recipe-footer {

@@ -57,10 +57,8 @@ export default {
           //"http://localhost:3000" + this.path,
           this.$root.store.server_domain +this.path,
         );
-        console.log(response);
         this.error = false;
         const recipes = response.data;
-        console.log(recipes)
         this.recipes = [];
         this.recipes.push(...recipes);
         if(this.recipes.length == 0){

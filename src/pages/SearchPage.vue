@@ -141,11 +141,10 @@ export default {
         this.form.filter = this.form.filter == false ? 0 : 1;
 
         this.param = "name=" + this.form.nameRecipe + "&amount=" + this.form.amount + "&filter=" +
-          this.form.filter + "&diet=" + this.form.diet + "&cuisine=" + this.form.cuisine + "&intolerances=" +
-          this.form.intolerance + "&sort=" + this.form.sort;
+        this.form.filter + "&diet=" + this.form.diet + "&cuisine=" + this.form.cuisine + "&intolerances=" +
+        this.form.intolerance + "&sort=" + this.form.sort;
         this.searchPath = "/recipes/search?" + this.param;
         this.ShowingResults = true;
-        console.log(this.searchPath);
         this.key += 1;
 
         const last = {

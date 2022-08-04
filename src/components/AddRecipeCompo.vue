@@ -240,12 +240,10 @@ export default {
       }
     },
     onSaveRecipe() {
-      // console.log("onSaveRecipe method called");
       this.$v.form.$touch();
       if (this.$v.form.$anyError) {
         return;
       }
-      // console.log("Save method go");
       this.Save();
     },
     onReset() {
