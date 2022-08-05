@@ -1,17 +1,20 @@
 <template>
-  <span class="recipe-preview">  
-    <router-link v-if="!isNaN(recipe.id)" :to="{ name: 'recipe', params: { recipeId: recipe.id } }">
-    <div class="recipe-body">
-      <img  title="Click for full details" v-if="image_load && !isNaN(recipe.id)" :src="recipe.image" class="recipe-image" />
-      <img  title="Click for full details" v-if="image_load && isNaN(recipe.id) && recipe.id.startsWith('f')" :src="recipe.image" class="recipe-image1" />
-      <img  title="Click for full details" v-if="image_load && isNaN(recipe.id) && recipe.id.startsWith('d')" :src="recipe.image" class="recipe-image" />
-
-    </div>
+  <span :class="`${family ? 'family-recipe-preview' : 'recipe-preview'}`" > 
+    <router-link v-if="!family" class="recipe-image" :to="{ name: 'recipe', params: { recipeId: recipe.id } }">
+      <div class="recipe-body">
+        <img  title="Click for full details" v-if="image_load && !isNaN(recipe.id)" :src="recipe.image" class="recipe-image" />
+        <img  title="Click for full details" v-if="image_load && isNaN(recipe.id) && family==false" v-bind:src="image" class="recipe-image" />
+      </div>
+    </router-link>
+    <router-link v-if="family" class="family-image" :to="{ name: 'recipeFamily', params: { recipe: recipe } }">
+      <div class="family-recipe-body">
+        <img  title="Click for full details" v-if="image_load && isNaN(recipe.id) && family==true" v-bind:src="image" class="family-image" />
+      </div>
     </router-link>
 
 
     <div class="recipe-footer">
-      <span v-if="viewed && image_load">
+      <span v-if="viewed">
         <div :title="recipe.title" class="blue-recipe-title">
           {{ recipe.title }}
         </div>
@@ -45,22 +48,22 @@ export default {
   },
   async mounted() {
     try{
+      console.log(this.recipe);
       if(isNaN(this.recipe.id)){
-        if(this.recipe.id.startsWith("f")){
+        if(this.recipe.id.startsWith("f")){ //family
           this.image = require('../assets/'+this.recipe.image);
-          this.test=1;
+          //vegen: require('../assets/vegan.png'),
+          //this.image = require('../dist/img'+this.recipe.image);
           this.image_load = true;
+          this.family = true;
         }
-        else{
-          this.axios.get(this.recipe.image).then((i) => {
-          this.image_load = true;
-        });
+        else{ //my recipe (from DB). start with "d"
+          //this.axios.get(this.recipe.image)
+          this.image_load=true;
+          this.image = this.recipe.image;
         }
       }
-      else{
-        //   this.axios.get(this.recipe.image).then((i) => {
-        //   this.image_load = true;
-        // });
+      else{ //spooncolar
         this.image_load=true;
       }
     if(!isNaN(this.recipe.id)){
@@ -106,7 +109,7 @@ export default {
       vegetarian: require('../assets/vegetarian.png'),
       glutenFree: require('../assets/gluten-free.png') ,
       image: "",
-      test: 0
+      family: false
     };
   },
   props: {
@@ -119,41 +122,53 @@ export default {
 </script>
 
 <style scoped>
-.recipe-preview {
-  display: inline-block;
-  width: 90%;
-  height: 100%;
-  position: relative;
-  margin: 10px 10px;
-}
+
 .recipe-preview > .recipe-body {
   width: 100%;
   height: 200px;
   position: relative;
 }
 
-.recipe-preview .recipe-body {
+.recipe-preview {
   margin-left: auto;
   margin-right: auto;
   margin-top: auto;
   margin-bottom: auto;
   display: block;
-  width: 200px;
-  height: 300px;
+  width: 400px;
+  height: 400px;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+}
+
+.family-recipe-preview {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+  display: block;
+  width: 400px;
+  height: 600px;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;
 }
 .recipe-image{
   width:100%;
-  height: 100%;
+  height: 200px;
 }
 
-.recipe-image{
-  width:200px;
-  height:200px;
+.family-image{
+  width:100%;
+  height: 400px;
 }
 
+.recipe-preview > .family-recipe-body {
+  width: 100%;
+  height: 400px;
+  position: relative;
+}
 .recipe-preview .recipe-footer {
   width: 100%;
   height: 50%;

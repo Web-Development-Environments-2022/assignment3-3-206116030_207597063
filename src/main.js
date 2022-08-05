@@ -1,5 +1,5 @@
 import axios from "axios";
-axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = false;
 import Vue from "vue";
 import App from "./App.vue";
 import VueAxios from "vue-axios";
@@ -9,6 +9,7 @@ import VueAxios from "vue-axios";
 import routes from "./routes";
 import VueRouter from "vue-router";
 Vue.use(VueRouter);
+Vue.config.devtools = true;
 import { ModalPlugin } from 'bootstrap-vue'
 Vue.use(ModalPlugin)
 const router = new VueRouter({
@@ -87,7 +88,7 @@ const shared_data = {
     this.username = undefined;
   },
   //server_domain: "http://localhost:3000",
-  server_domain: "https://RecipesMaster.cs.bgu.ac.il:3000",
+  server_domain: "https://RecipesMaster.cs.bgu.ac.il:443",
 };
 console.log(shared_data);
 // Vue.prototype.$root.store = shared_data;

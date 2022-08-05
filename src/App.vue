@@ -144,7 +144,7 @@ export default {
 }
 .input-f{
   float:left;
-  margin-left:50px;
+  margin-left:20px;
 }
 #nav a {
   font-weight: bold;
@@ -173,8 +173,9 @@ export default {
   text-align:center;
 }
 .mail-input{
-  width:100px;
+  width:200px;
   margin-top:7px;
+  margin-left: 100px;
 }
 .logo{
   display: block;
