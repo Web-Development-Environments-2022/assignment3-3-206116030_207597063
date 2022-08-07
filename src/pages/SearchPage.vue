@@ -98,7 +98,7 @@ export default {
         { value: '10', text: '10' },
         { value: '15', text: '15' },
       ],
-      lastSearch: localStorage.getItem("lastSearch"),
+      lastSearch: sessionStorage.getItem("lastSearch"),
       ShowingResults: false,
       errors: [],
       validated: false,
@@ -157,8 +157,8 @@ export default {
           'intolerance': this.form.intolerance,
           'submitError': this.form.submitError
         };
-        localStorage.setItem("lastSearch", JSON.stringify(last));
-        this.lastSearch = JSON.parse(localStorage.getItem("lastSearch"))
+        sessionStorage.setItem("lastSearch", JSON.stringify(last));
+        this.lastSearch = JSON.parse(sessionStorage.getItem("lastSearch"))
 
       } catch (err) {
         console.log(err.response);
@@ -192,7 +192,7 @@ export default {
       });
     },
     showLastSearch(){
-      this.lastSearch = JSON.parse(localStorage.getItem("lastSearch"))
+      this.lastSearch = JSON.parse(sessionStorage.getItem("lastSearch"))
       this.form = {
         nameRecipe: this.lastSearch.nameRecipe,
         amount: this.lastSearch.amount,

@@ -34,7 +34,7 @@
       <img v-if="recipe.vegan" v-bind:src="vegen" class="recipe-props" />
       <img v-if="recipe.vegetarian" v-bind:src="vegetarian" class="recipe-props" />
       <img v-if="recipe.glutenFree" v-bind:src="glutenFree" class="recipe-props" />
-      <favorite v-if="!isNaN(recipe.id) && $root.store.username" :value="fav" :id="recipe.id"></favorite>
+      <favorite v-if="!isNaN(recipe.id) && this.$root.store.username" :value="fav" :id="recipe.id"></favorite>
 
     </div>
   </span>
@@ -66,7 +66,7 @@ export default {
       else{ //spooncolar
         this.image_load=true;
       }
-    if(!isNaN(this.recipe.id)){
+    if(!isNaN(this.recipe.id) && this.$root.store.username){
 
       const response_fav = await this.axios.get(
             //"http://localhost:3000/user/favorites"

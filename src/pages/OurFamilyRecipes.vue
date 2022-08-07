@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <RecipePreviewList :key="key" title="Family recipes" path="/recipes/getfamilyRecipes" class="FamilyRecipe center" />
+        <RecipePreviewList :key="key" title="Family recipes" path="/user/myFamilyRecipes" class="FamilyRecipe center" />
 
     </div>
 

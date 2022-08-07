@@ -9,7 +9,6 @@
       <b-nav-item :to="{ name: 'main' }"><b-icon class="icons" icon="house-fill"></b-icon>Home</b-nav-item>
       <b-nav-item :to="{ name: 'search' }"><b-icon class="icons" icon="search"></b-icon>Search</b-nav-item>
       <b-nav-item :to="{ name: 'about' }"><b-icon class="icons" icon="info-circle-fill"></b-icon>About</b-nav-item>
-      <b-nav-item :to="{ name: 'OurFamilyRecipes' }"><b-icon class="icons" icon="newspaper"></b-icon>Family Recipes</b-nav-item>
 
     </b-navbar-nav>
     <b-navbar-nav class="ml-auto">
@@ -20,6 +19,7 @@
       
       <!-- Navbar dropdowns -->
       <b-nav-item-dropdown text="My Kitchen" v-if="$root.store.username" right>
+        <b-dropdown-item :to="{ name: 'OurFamilyRecipes' }"><b-icon class="icons" icon="newspaper"></b-icon>Family Recipes</b-dropdown-item>
         <b-dropdown-item :to="{ name: 'favorites' }"><b-icon class="icons" icon="star-fill"></b-icon>Favorites</b-dropdown-item>
         <b-dropdown-item :to="{ name: 'myRecipes' }"><b-icon class="icons" icon="list-check"></b-icon>My recipes</b-dropdown-item>
         <b-dropdown-item v-if="$root.store.username" id="show-btn" @click="$bvModal.show('bv-modal-example')">
@@ -109,10 +109,20 @@ export default {
     };
   },
   methods: {
-    Logout() {
+    async Logout() {
       this.$root.store.logout();
+      try{
+          const response = await this.axios.post(
+          //"http://localhost:3000/auth/Logout",
+          this.$root.store.server_domain +"/auth/Logout");
+      } catch (err) {
+        this.$root.toast("Logout failed", "Try later", "danger");
+        console.log(err.response);
+        this.form.submitError = err.response.data.message;
+      }
+      
       this.$root.toast("Logout", "User logged out successfully", "success");
-      localStorage.setItem("lastSearch", '');
+      sessionStorage.setItem("lastSearch", '');
       this.$router.push("/").catch(() => {
         this.$forceUpdate();
       });

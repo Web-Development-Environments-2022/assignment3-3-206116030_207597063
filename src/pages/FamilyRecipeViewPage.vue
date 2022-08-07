@@ -1,11 +1,16 @@
 <template>
   <div class="container">
+
+
     <div v-if="recipe">
       <div class="recipe-header mt-3 mb-4">
         <h1>{{ recipe.title }}</h1>
         <h4>Recipe owner: {{recipe.ownerRecipe}}</h4>
-        <img :src="getImgUrl()" class="center"  />
+        <!-- <img :src="getImgUrl()" class="center"  /> -->
+        <vue-image-slider :images="imageArray" :intervalVal=3000 :height=400 :width=400 />
+
       </div>
+      
 
 
       <div class="recipe-body">
@@ -64,21 +69,13 @@
 </template>
 
 <script>
+import VueImageSlider from 'vue-image-slider'
 import RoundSlider from 'vue-round-slider'
 export default {
-  // props: {
-  //   recipe: {
-  //     type: Object,
-  //     required: true
-  //   }
-  // },
   components: {
     RoundSlider,
+    VueImageSlider
   },
-  // async mounted() {
-  //   console.log(this.recipe.image);
-  //   console.log(typeof(this.recipe.image));
-  // },
     data() {
         return {
             recipe: this.$route.params.recipe,
@@ -88,7 +85,29 @@ export default {
             glutenFree: require('../assets/gluten-free.png'),
             count: 0,
             value:0,
+            imageArray: []
+            // imageArray: [
+            //   'https://cdn.pixabay.com/photo/2015/12/12/15/24/amsterdam-1089646_1280.jpg',
+            //   'https://cdn.pixabay.com/photo/2016/02/17/23/03/usa-1206240_1280.jpg',
+            //   'https://cdn.pixabay.com/photo/2015/05/15/14/27/eiffel-tower-768501_1280.jpg',
+            //   'https://cdn.pixabay.com/photo/2016/12/04/19/30/berlin-cathedral-1882397_1280.jpg'
+            // ],
         }
+    },
+    mounted() {
+      this.imageArray.push(require('../assets/'+this.recipe.image));
+      if(this.recipe.image1 != "null"){
+        this.imageArray.push(require('../assets/'+this.recipe.image1));        
+      }
+      if(this.recipe.image2 != "null"){
+        this.imageArray.push(require('../assets/'+this.recipe.image2));        
+      }      
+      if(this.recipe.image3 != "null"){
+        this.imageArray.push(require('../assets/'+this.recipe.image3));        
+      }
+      
+      
+
     },
     methods:{
     increment(event){
@@ -122,9 +141,9 @@ export default {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 60%;
+  width: 400px;
   margin-top: 20px;
-  height: 20%;
+  height: 400px;
 }
 /* .recipe-header{
 

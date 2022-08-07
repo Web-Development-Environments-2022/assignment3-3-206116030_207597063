@@ -4,6 +4,10 @@
       <div class="recipe-header mt-3 mb-4">
         <h1> <b>{{ recipe.title }}</b></h1>
         <img :src="recipe.image" class="center" />
+
+      </div>
+      <div class="favorites">
+        <favorite v-if="isNum && $root.store.username" :value="fav" :id="$route.params.recipeId"></favorite>
       </div>
       
       <div class="recipe-body">
@@ -62,15 +66,20 @@
 
   <script>
 import RoundSlider from 'vue-round-slider'
+import favorite from "../components/Favorite.vue";
+
 export default {
   components: {
     RoundSlider,
+    favorite,
   },
   data() {
     return {
       recipe: null,
       count: 0,
-      value:0
+      value:0,
+      isNum: false,
+      fav:false,
     };
   },
   async created() {
@@ -140,6 +149,19 @@ export default {
         this.recipe.vegetarian = this.recipe.vegetarian == '0' ? "false" : "true";
         this.recipe.glutenFree = this.recipe.glutenFree == '0' ? "false" : "true";
       }
+      if(!isNaN(this.$route.params.recipeId) && this.$root.store.username){
+        this.isNum=true;
+          const response_fav = await this.axios.get(
+                //"http://localhost:3000/user/favorites"
+                this.$root.store.server_domain + "/user/favorites",
+          );
+          response_fav.data.map((fav)=>{
+            if(fav.id == this.$route.params.recipeId){
+              this.fav = true;
+            }
+          });
+        
+    }
     } catch (error) {
       console.log(error);
       this.$root.toast("OOPS", "We were unable to fully load the page, please try again", "danger");
@@ -188,6 +210,13 @@ h1{
 }
 img{
   margin-bottom:20px;
+}
+.favorites{
+  margin-top:30px;
+  margin-bottom:30px;
+  margin-left: auto;
+  margin-right:auto;
+  text-align: center;
 }
 .recipe-body{
   margin:auto;

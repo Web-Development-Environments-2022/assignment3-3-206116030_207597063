@@ -163,7 +163,7 @@ export default {
     },
     async Register() {
       try {
-        const response = await this.axios.post(
+        var response = await this.axios.post(
           //"http://localhost:3000/auth/Register",
           this.$root.store.server_domain + "/auth/Register",
 
@@ -174,15 +174,23 @@ export default {
             country: this.form.country,
             password: this.form.password,
             email: this.form.email,
-
-
           }
         );
+      if (response.status == 201){
+        this.$root.toast("Great", "The user was added successfully", "success");
         this.$router.push("/login");
+        
+      } 
+      
       } catch (err) {
+        if(err.response.status == 409) {
+          this.$root.toast("OOPS", "Username taken", "danger");
+        }
+        else{
+          this.$root.toast("OOPS", "We were unable to complete the your register, please try again", "danger");
+        }
         console.log(err.response);
         this.form.submitError = err.response.data.message;
-        this.$root.toast("OOPS", "We were unable to complete the your register, please try again", "danger");
 
       }
     },

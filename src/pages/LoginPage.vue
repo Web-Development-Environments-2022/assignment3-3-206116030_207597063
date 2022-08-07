@@ -76,7 +76,7 @@ export default {
         );
         this.$root.store.login(this.form.username);
         this.$router.push("/");
-        localStorage.setItem("lastSearch", '');
+        sessionStorage.setItem("lastSearch", '');
         // localStorage.lastSeaarch = '';
       } catch (err) {
         this.$root.toast("Login failed", "Username or password is incorrect", "danger");
