@@ -232,7 +232,7 @@ export default {
         this.$nextTick(() => {
           this.$bvModal.hide('bv-modal-example')
         })
-        this.$router.push("/myRecipes");
+        this.$router.push("/myRecipes").catch(()=>{});
       } catch (err) {
         console.log(err.response);
         this.$root.toast("OOPS", "We were not able to upload the recipe, please try again", "danger");

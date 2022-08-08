@@ -75,7 +75,7 @@ export default {
           }
         );
         this.$root.store.login(this.form.username);
-        this.$router.push("/");
+        this.$router.push("/").catch(()=>{});;
         sessionStorage.setItem("lastSearch", '');
         // localStorage.lastSeaarch = '';
       } catch (err) {

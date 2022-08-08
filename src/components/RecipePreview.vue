@@ -52,13 +52,10 @@ export default {
       if(isNaN(this.recipe.id)){
         if(this.recipe.id.startsWith("f")){ //family
           this.image = require('../assets/'+this.recipe.image);
-          //vegen: require('../assets/vegan.png'),
-          //this.image = require('../dist/img'+this.recipe.image);
           this.image_load = true;
           this.family = true;
         }
         else{ //my recipe (from DB). start with "d"
-          //this.axios.get(this.recipe.image)
           this.image_load=true;
           this.image = this.recipe.image;
         }

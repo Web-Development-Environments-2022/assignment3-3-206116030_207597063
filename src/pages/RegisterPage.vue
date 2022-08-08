@@ -178,7 +178,7 @@ export default {
         );
       if (response.status == 201){
         this.$root.toast("Great", "The user was added successfully", "success");
-        this.$router.push("/login");
+        this.$router.push("/login").catch(()=>{});
         
       } 
       

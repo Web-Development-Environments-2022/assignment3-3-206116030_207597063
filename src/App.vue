@@ -35,7 +35,7 @@
           </b-modal>
       </b-nav-item-dropdown>
       <b-nav-item-dropdown :text="$root.store.username" v-if="$root.store.username" right>
-        <b-dropdown-item v-on:click="Logout" :to="{ name: 'main' }"><b-icon icon="person-circle"></b-icon>
+        <b-dropdown-item v-on:click="Logout"><b-icon icon="person-circle"></b-icon>
         Sign Out</b-dropdown-item>
       </b-nav-item-dropdown>
     </b-navbar-nav>
@@ -56,8 +56,11 @@
         <li>
           <b-link :to="{ name: 'about'}">About</b-link>
         </li>
-        <li>
-          <b-link :to="{ name: 'OurFamilyRecipes'}">Family recipes</b-link>
+        <li v-if="!$root.store.username">
+          <b-link :to="{ name: 'register'}">Register</b-link>
+        </li>
+        <li v-if="!$root.store.username">
+          <b-link :to="{ name: 'login'}">Login</b-link>
         </li>
       </ul>
     </div>
@@ -115,17 +118,15 @@ export default {
           const response = await this.axios.post(
           //"http://localhost:3000/auth/Logout",
           this.$root.store.server_domain +"/auth/Logout");
+      
+      this.$root.toast("Logout", "User logged out successfully", "success");
+      sessionStorage.setItem("lastSearch", '');
+      this.$router.push("/").catch(()=>{});
       } catch (err) {
         this.$root.toast("Logout failed", "Try later", "danger");
         console.log(err.response);
         this.form.submitError = err.response.data.message;
       }
-      
-      this.$root.toast("Logout", "User logged out successfully", "success");
-      sessionStorage.setItem("lastSearch", '');
-      this.$router.push("/").catch(() => {
-        this.$forceUpdate();
-      });
     }
   }
 };
