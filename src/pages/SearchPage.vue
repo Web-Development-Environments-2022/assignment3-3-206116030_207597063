@@ -6,7 +6,7 @@
 
     <b-form @submit.prevent="onSearch" @reset.prevent="onReset">
 
-      <b-form-group id="input-group-name" label-cols-sm="3" label="recipe name:" label-for="nameRecipe" v-if="!ShowingResults">
+      <b-form-group id="input-group-name" label-cols-sm="3" label="Recipe name:" label-for="nameRecipe" v-if="!ShowingResults">
         <b-form-input id="nameRecipe" v-model="form.nameRecipe" type="text" :state="validateState('nameRecipe')">
         </b-form-input>
         <b-form-invalid-feedback v-if="!$v.form.nameRecipe.required">
@@ -14,7 +14,7 @@
         </b-form-invalid-feedback>
       </b-form-group>
 
-      <b-form-group id="input-group-amount" label-cols-sm="3" label="amount:" label-for="amount" v-if="!ShowingResults">
+      <b-form-group id="input-group-amount" label-cols-sm="3" label="Amount:" label-for="amount" v-if="!ShowingResults">
         <b-form-select id="amount" v-model="form.amount" :options="amount_options" :state="validateState('amount')">
         </b-form-select>
         <b-form-invalid-feedback v-if="!$v.form.amount.required">
@@ -22,7 +22,7 @@
         </b-form-invalid-feedback>
       </b-form-group>
 
-      <b-form-group id="input-group-sort" label-cols-sm="3" label="sort:" label-for="sort" v-if="!ShowingResults">
+      <b-form-group id="input-group-sort" label-cols-sm="3" label="Sort by:" label-for="sort" v-if="!ShowingResults">
         <b-form-select id="sort" v-model="form.sort" :options="sort_options" :state="validateState('sort')">
         </b-form-select>
         <b-form-invalid-feedback v-if="!$v.form.sort.required">
@@ -30,19 +30,19 @@
         </b-form-invalid-feedback>
       </b-form-group>
 
-      <b-form-group id="input-group-filter" label-cols-sm="3" label="filter:" label-for="filter" v-if="!ShowingResults">
+      <b-form-group id="input-group-filter" label-cols-sm="3" label="Filter by:" label-for="filter" v-if="!ShowingResults">
         <input class="form-check-input" v-model="form.filter" type="checkbox" id="filter" />
       </b-form-group>
 
-      <b-form-group id="input-group-cuisine" label-cols-sm="3" label="cuisine:" label-for="cuisine" v-if="!ShowingResults">
+      <b-form-group id="input-group-cuisine" label-cols-sm="3" label="Cuisine:" label-for="cuisine" v-if="!ShowingResults">
         <b-form-select id="cuisine" v-model="form.cuisine" :disabled="!form.filter" :options="cuisines"></b-form-select>
       </b-form-group>
 
-      <b-form-group id="input-group-diet" label-cols-sm="3" label="diet:" label-for="diet" v-if="!ShowingResults">
+      <b-form-group id="input-group-diet" label-cols-sm="3" label="Diet:" label-for="diet" v-if="!ShowingResults">
         <b-form-select id="diet" v-model="form.diet" :disabled="!form.filter" :options="diets"></b-form-select>
       </b-form-group>
 
-      <b-form-group id="input-group-intolerance" label-cols-sm="3" label="intolerance:" label-for="intolerance" v-if="!ShowingResults">
+      <b-form-group id="input-group-intolerance" label-cols-sm="3" label="Intolerance:" label-for="intolerance" v-if="!ShowingResults">
         <b-form-select id="intolerance" v-model="form.intolerance" :disabled="!form.filter" :options="intolerances">
         </b-form-select>
       </b-form-group>

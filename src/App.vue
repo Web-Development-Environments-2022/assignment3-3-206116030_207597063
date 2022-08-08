@@ -86,10 +86,10 @@
       <h6>Want to get updated on some new awesome recipes?</h6>
     </div>
     <div class="input-f">
-        <b-form-input class="mail-input" placeholder="Enter mail here"></b-form-input>
+        <b-form-input type="email" v-model="mail" class="mail-input" placeholder="Enter mail here"></b-form-input>
     </div>
     <div class="input-b">
-        <b-button variant="warning">Send</b-button>
+        <b-button @click="sendMail" variant="warning">Send</b-button>
     </div>
     </div>
     </b-col>
@@ -109,6 +109,7 @@ export default {
   data() {
     return {
       username: this.$root.store.username,
+      mail: "",
     };
   },
   methods: {
@@ -127,6 +128,12 @@ export default {
         console.log(err.response);
         this.form.submitError = err.response.data.message;
       }
+    },
+    sendMail(){
+      this.mail="";
+      this.$root.toast("Thank you", "Thank you for yours support and trust, we hope you enjoy our recommendation", "success");
+
+
     }
   }
 };
@@ -157,6 +164,13 @@ export default {
   float:left;
   margin-left:20px;
 }
+
+.mail-input{
+  width:240px;
+  margin-top:7px;
+  margin-left: 30px;
+}
+
 #nav a {
   font-weight: bold;
 
@@ -183,11 +197,7 @@ export default {
   width:100%;
   text-align:center;
 }
-.mail-input{
-  width:200px;
-  margin-top:7px;
-  margin-left: 100px;
-}
+
 .logo{
   display: block;
   margin: auto;
