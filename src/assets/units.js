@@ -1,1 +1,1 @@
-export default ['kg','cups','Spoon','unit'];
+export default ['kg','cups','Spoons','units','grams','liters'];

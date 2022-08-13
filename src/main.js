@@ -77,6 +77,7 @@ Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)
 const shared_data = {
   username: localStorage.username,
+
   login(username) {
     localStorage.setItem("username", username);
     this.username = username;
@@ -90,7 +91,6 @@ const shared_data = {
   //server_domain: "http://localhost:3000",
   server_domain: "https://RecipesMaster.cs.bgu.ac.il:443",
 };
-console.log(shared_data);
 // Vue.prototype.$root.store = shared_data;
 
 new Vue({
@@ -98,6 +98,9 @@ new Vue({
   data() {
     return {
       store: shared_data,
+      cuisines: ['',],
+      diets: ['',],
+      intolerances: ['',]
     };
   },
   methods: {
@@ -111,6 +114,22 @@ new Vue({
         autoHideDelay: 3000,
       });
     },
+  },
+  mounted(){
+    try {
+      const func = async () => {
+        const res = await this.axios.get(
+        //"http://localhost:3000/recipes/searchParam",
+        this.$root.store.server_domain +"/recipes/searchParam");
+        res.data[0].map((x)=>this.cuisines.push(x));
+        res.data[1].map((x)=>this.diets.push(x));
+        res.data[2].map((x)=>this.intolerances.push(x));
+      }
+      func();      
+    }
+    catch(err){
+        console.log(err.response);
+    }
   },
   render: (h) => h(App),
 }).$mount("#app");

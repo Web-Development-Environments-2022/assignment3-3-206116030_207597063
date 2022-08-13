@@ -48,7 +48,6 @@ export default {
   },
   async mounted() {
     try{
-      console.log(this.recipe);
       if(isNaN(this.recipe.id)){
         if(this.recipe.id.startsWith("f")){ //family
           this.image = require('../assets/'+this.recipe.image);

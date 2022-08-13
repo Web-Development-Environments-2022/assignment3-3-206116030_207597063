@@ -66,9 +66,6 @@
 </template>
 
 <script>
-import cuisines from "../assets/cuisine";
-import diets from "../assets/diets";
-import intolerances from "../assets/intolerances";
 import RecipePreviewList from "../components/RecipePreviewList";
 import { required } from "vuelidate/lib/validators";
 
@@ -98,13 +95,13 @@ export default {
         { value: '10', text: '10' },
         { value: '15', text: '15' },
       ],
+      cuisines: this.$root.cuisines,
+      diets: this.$root.diets,
+      intolerances: this.$root.intolerances,
       lastSearch: sessionStorage.getItem("lastSearch"),
       ShowingResults: false,
       errors: [],
       validated: false,
-      cuisines: [{ value: null, text: "", disabled: true }],
-      diets: [{ value: null, text: "", disabled: true }],
-      intolerances: [{ value: null, text: "", disabled: true }],
       searchPath: "",
       param: "",
       key: 0,
@@ -122,11 +119,6 @@ export default {
         required
       }
     }
-  },
-  mounted() {
-    this.cuisines.push(...cuisines);
-    this.diets.push(...diets);
-    this.intolerances.push(...intolerances);
   },
   methods: {
     validateState(param) {

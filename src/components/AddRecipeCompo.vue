@@ -68,8 +68,8 @@
                   {{"step "+ k}}       
                   <b-form-input placeholder="instruction" id="instruction" v-model="input.instruction" required></b-form-input>
                   <span>
-                    <i class="fas fa-minus-circle" @click="remove(k.toExponential,'instructions')" v-show="k || ( !k && form.analyzedInstructions.length > 1)"> <img src="../assets/icons8-minus-48.png"/></i>
-                    <i class="fas fa-plus-circle" @click="add(k,'instructions')" v-show="k == form.analyzedInstructions.length-1"><img src="../assets/icons8-plus-48.png"/></i>
+                    <i class="fasfa-minus-circle" @click="remove(k.toExponential,'instructions')" v-show="k || ( !k && form.analyzedInstructions.length > 1)"> <img src="../assets/icons8-minus-48.png"/></i>
+                    <i class="fasfa-plus-circle" @click="add(k,'instructions')" v-show="k == form.analyzedInstructions.length-1"><img src="../assets/icons8-plus-48.png"/></i>
                   </span>       
               </div>
             </b-form-group>
@@ -84,8 +84,8 @@
                   <b-form-input placeholder="amount" id="amount" v-model="input.amount" type="number" required></b-form-input>
                   <b-form-select id="unit" v-model="input.unit" :options="units" required></b-form-select>
                   <span>
-                    <i class="fas fa-minus-circle" @click="remove(k)" v-show="k || ( !k && form.ingredients.length > 1)"> <img src="../assets/icons8-minus-48.png"/></i>
-                    <i class="fas fa-plus-circle" @click="add(k)" v-show="k == form.ingredients.length-1"><img src="../assets/icons8-plus-48.png"/></i>
+                    <i class="fasfa-minus-circle" @click="remove(k)" v-show="k || ( !k && form.ingredients.length > 1)"> <img src="../assets/icons8-minus-48.png"/></i>
+                    <i class="fasfa-plus-circle" @click="add(k)" v-show="k == form.ingredients.length-1"><img src="../assets/icons8-plus-48.png"/></i>
                   </span>       
               </div>
             </b-form-group>
@@ -122,7 +122,6 @@ export default {
                 vegeterian: 0,
                 glutenFree: 0,
                 servings: "",
-                //analyzedInstructions: "",
                 submitError: undefined,
                 analyzedInstructions: [
                   {
@@ -213,19 +212,19 @@ export default {
       console.log(this.form.analyzedInstructions); 
         try {  
         const response = await this.axios.post(
-          //"http://localhost:3000/recipes/addRecipe",
-          this.$root.store.server_domain + "/recipes/addRecipe",
+          //"http://localhost:3000/user/addRecipe",
+          this.$root.store.server_domain + "/user/addRecipe",
 
           {
             title: this.form.name,
-            recipeImage: this.form.image,
+            image: this.form.image,
             readyInMinutes: this.form.readyInMinutes,
             vegan: this.form.vegan,
             vegeterian: this.form.vegeterian,
             glutenFree: this.form.glutenFree,
             servings: this.form.servings,
             analyzedInstructions: this.form.analyzedInstructions,
-            ingredients: this.form.ingredients
+            extendedIngredients: this.form.ingredients
           }
         );
         this.$root.toast("Great", "The recipe was added successfully", "success");
@@ -281,4 +280,5 @@ export default {
 .container {
   max-width: 500px;
 }
+
 </style>

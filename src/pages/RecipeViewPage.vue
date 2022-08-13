@@ -110,7 +110,6 @@ export default {
         glutenFree,
         pricePerServing,
         servings,
-        healthScore
       } = response.data;
 
       var _instructions="";
@@ -140,7 +139,6 @@ export default {
         glutenFree,
         pricePerServing,
         servings,
-        healthScore
       };
 
       this.recipe = _recipe;

@@ -82,8 +82,6 @@ export default {
   methods:{
     random: function() {
     this.key +=1;
-    console.log(this.key);
-
 
   }
   },

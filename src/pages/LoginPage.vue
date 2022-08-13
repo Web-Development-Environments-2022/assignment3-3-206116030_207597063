@@ -11,7 +11,7 @@
       </b-form-group>
 
       <b-form-group id="input-group-Password" label-cols-sm="3" label="Password:" label-for="Password">
-        <b-form-input id="Password" type="password" v-model="$v.form.password.$model"
+        <b-form-input id="Password" type="password" autocomplete="on" v-model="$v.form.password.$model"
           :state="validateState('password')"></b-form-input>
         <b-form-invalid-feedback>
           Password is required
