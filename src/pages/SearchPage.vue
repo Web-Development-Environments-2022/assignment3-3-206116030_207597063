@@ -78,8 +78,8 @@ export default {
     return {
       form: {
         nameRecipe: "",
-        amount: null,
-        sort: null,
+        amount: '5',
+        sort: 'popularity',
         filter: false,
         cuisine: '',
         diet: '',

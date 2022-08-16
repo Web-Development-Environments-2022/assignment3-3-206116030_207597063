@@ -46,7 +46,7 @@
         <b-form-input id="password" type="password" v-model="$v.form.password.$model"
           :state="validateState('password')"></b-form-input>
         <b-form-invalid-feedback v-if="!$v.form.password.required">
-          Password is required
+          Password with length 5-10 with at least 1 special character and 1 number is required
         </b-form-invalid-feedback>
         <b-form-text v-else-if="$v.form.password.$error" text-variant="info">
           Your password should be <strong>strong</strong>. <br />
@@ -99,7 +99,8 @@ import {
   maxLength,
   alpha,
   sameAs,
-  email
+  email,
+  helpers,
 } from "vuelidate/lib/validators";
 
 export default {
@@ -143,7 +144,13 @@ export default {
       },
       password: {
         required,
-        length: (p) => minLength(5)(p) && maxLength(10)(p)
+        length: (p) => minLength(5)(p) && maxLength(10)(p),
+        valid: function(value) {
+        const containsNumber = /[0-9]/.test(value)
+        const containsSpecial = /[#?!@$%^&*-]/.test(value)
+        return containsNumber && containsSpecial
+        },
+
       },
       confirmedPassword: {
         required,

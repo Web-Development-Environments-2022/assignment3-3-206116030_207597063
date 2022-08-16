@@ -5,12 +5,12 @@
     </div>
     <div class="middle">
     <div class="divon">
-      <RecipePreviewList :key="key" title="Suprise Me" path="/recipes/random" class="RandomRecipes center" />
+      <RecipePreviewList :key="key" title="Explore this recipes" path="/recipes/random" class="RandomRecipes center" />
       <OurButton :onClick="random" text="Show me more!"></OurButton>
     </div>  
 
     <div class="divon" v-if="$root.store.username">
-        <RecipePreviewList title="Watch it again" path="/user/viewed3" class="RandomRecipes center"/>
+        <RecipePreviewList title="Last watched recipes" path="/user/viewed3" class="RandomRecipes center"/>
     </div>
 
     <div class="divon" v-if="!$root.store.username">

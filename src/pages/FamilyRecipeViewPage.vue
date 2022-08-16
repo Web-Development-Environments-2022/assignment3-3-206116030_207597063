@@ -22,9 +22,9 @@
             <div>{{recipe.WhenDoWeEat}}</div>
             <div>Ready in {{ recipe.readyInMinutes }} minutes</div>
             <!-- <div>Likes: {{ recipe.aggregateLikes }} likes</div> -->
-            <div>Vegetarian: {{ recipe.vegetarian }} </div>
-            <div>Vegan: {{ recipe.vegan }} </div>
-            <div>Gluten Free: {{ recipe.glutenFree }} </div>
+            <div>Vegetarian: {{ vegetarianRecipe }} </div>
+            <div>Vegan: {{ veganRecipe }} </div>
+            <div>Gluten Free: {{ glutenFreeRecipe }} </div>
               
             </b-card-text></b-tab>
 
@@ -79,6 +79,9 @@ export default {
     data() {
         return {
             recipe: this.$route.params.recipe,
+            veganRecipe: false,
+            vegetarianRecipe: false,
+            glutenFreeRecipe: false,
             image_load: false,
             vegan: require('../assets/vegan.png'),
             vegetarian: require('../assets/vegetarian.png'),
@@ -105,7 +108,10 @@ export default {
       if(this.recipe.image3 != "null"){
         this.imageArray.push(require('../assets/'+this.recipe.image3));        
       }
-      
+      this.veganRecipe = this.recipe.vegan == 0 ? "false" : "true";
+      this.vegetarianRecipe = this.recipe.vegetarian == 0 ? "false" : "true";
+      this.glutenFreeRecipe = this.recipe.glutenFree == 0 ? "false" : "true";
+
       
 
     },
