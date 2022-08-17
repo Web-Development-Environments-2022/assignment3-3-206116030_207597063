@@ -46,11 +46,12 @@
         <b-form-input id="password" type="password" v-model="$v.form.password.$model"
           :state="validateState('password')"></b-form-input>
         <b-form-invalid-feedback v-if="!$v.form.password.required">
-          Password with length 5-10 with at least 1 special character and 1 number is required
+          Password is required
         </b-form-invalid-feedback>
         <b-form-text v-else-if="$v.form.password.$error" text-variant="info">
           Your password should be <strong>strong</strong>. <br />
-          For that, your password should be also:
+          For that, your password should be also: 
+          length 5-10 with at least 1 special character and 1 number
         </b-form-text>
         <b-form-invalid-feedback v-if="$v.form.password.required && !$v.form.password.length">
           Have length between 5-10 characters long
